@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.LearningContent;
 
+import java.util.List;
+
 public interface LearningContentMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,6 @@ public interface LearningContentMapper {
     int updateByPrimaryKeySelective(LearningContent record);
 
     int updateByPrimaryKey(LearningContent record);
+
+    List<LearningContent> selectAllBySubjectId(String subjectId);
 }

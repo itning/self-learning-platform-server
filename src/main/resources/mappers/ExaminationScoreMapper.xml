@@ -1,119 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.selflearningplatformserver.mapper.ExaminationScoreMapper">
-  <resultMap id="BaseResultMap" type="com.project.selflearningplatformserver.entity.ExaminationScore">
-    <constructor>
-      <idArg column="id" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="student_id" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="score" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
-      <arg column="exam_id" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, student_id, subject, score, exam_id, gmt_create, gmt_modified
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from examination_score
-    where id = #{id,jdbcType=CHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from examination_score
-    where id = #{id,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
-    insert into examination_score (id, student_id, subject, 
-      score, exam_id, gmt_create, 
-      gmt_modified)
-    values (#{id,jdbcType=CHAR}, #{studentId,jdbcType=CHAR}, #{subject,jdbcType=VARCHAR}, 
-      #{score,jdbcType=DECIMAL}, #{examId,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
-    insert into examination_score
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="studentId != null">
-        student_id,
-      </if>
-      <if test="subject != null">
-        subject,
-      </if>
-      <if test="score != null">
-        score,
-      </if>
-      <if test="examId != null">
-        exam_id,
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create,
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=CHAR},
-      </if>
-      <if test="studentId != null">
-        #{studentId,jdbcType=CHAR},
-      </if>
-      <if test="subject != null">
-        #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="score != null">
-        #{score,jdbcType=DECIMAL},
-      </if>
-      <if test="examId != null">
-        #{examId,jdbcType=CHAR},
-      </if>
-      <if test="gmtCreate != null">
-        #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
-    update examination_score
-    <set>
-      <if test="studentId != null">
-        student_id = #{studentId,jdbcType=CHAR},
-      </if>
-      <if test="subject != null">
-        subject = #{subject,jdbcType=VARCHAR},
-      </if>
-      <if test="score != null">
-        score = #{score,jdbcType=DECIMAL},
-      </if>
-      <if test="examId != null">
-        exam_id = #{examId,jdbcType=CHAR},
-      </if>
-      <if test="gmtCreate != null">
-        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
-    update examination_score
-    set student_id = #{studentId,jdbcType=CHAR},
-      subject = #{subject,jdbcType=VARCHAR},
-      score = #{score,jdbcType=DECIMAL},
-      exam_id = #{examId,jdbcType=CHAR},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=CHAR}
-  </update>
+    <resultMap id="BaseResultMap" type="com.project.selflearningplatformserver.entity.ExaminationScore">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="student_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="score" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="exam_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, student_id, subject, score, exam_id, gmt_create, gmt_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from examination_score
+        where id = #{id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from examination_score
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+    <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
+        insert into examination_score (id, student_id, subject,
+                                       score, exam_id, gmt_create,
+                                       gmt_modified)
+        values (#{id,jdbcType=CHAR}, #{studentId,jdbcType=CHAR}, #{subject,jdbcType=VARCHAR},
+                #{score,jdbcType=DECIMAL}, #{examId,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
+        insert into examination_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="examId != null">
+                exam_id,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="studentId != null">
+                #{studentId,jdbcType=CHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="examId != null">
+                #{examId,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
+        update examination_score
+        <set>
+            <if test="studentId != null">
+                student_id = #{studentId,jdbcType=CHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="examId != null">
+                exam_id = #{examId,jdbcType=CHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.ExaminationScore">
+        update examination_score
+        set student_id   = #{studentId,jdbcType=CHAR},
+            subject      = #{subject,jdbcType=VARCHAR},
+            score        = #{score,jdbcType=DECIMAL},
+            exam_id      = #{examId,jdbcType=CHAR},
+            gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <select id="selectAllByExaminationId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from examination_score where exam_id = #{examinationId,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.Examination;
 
+import java.util.List;
+
 public interface ExaminationMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,6 @@ public interface ExaminationMapper {
     int updateByPrimaryKeySelective(Examination record);
 
     int updateByPrimaryKey(Examination record);
+
+    List<Examination> selectAllByUserId(String userId);
 }
