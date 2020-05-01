@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.Announcement;
 
+import java.util.List;
+
 public interface AnnouncementMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,8 @@ public interface AnnouncementMapper {
     int updateByPrimaryKeySelective(Announcement record);
 
     int updateByPrimaryKey(Announcement record);
+
+    List<Announcement> selectAll();
+
+    long countByPrimaryKey(String id);
 }

@@ -5,6 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author itning
  * @date 2020/5/1 16:18
+ * @see LogAspect
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

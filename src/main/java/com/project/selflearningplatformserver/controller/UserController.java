@@ -63,6 +63,7 @@ public class UserController {
      * @param username  新增的教师用户名
      * @return ResponseEntity
      */
+    @Log("新增教师")
     @PostMapping("/teacher")
     public ResponseEntity<?> newTeacher(@MustAdminLogin LoginUser loginUser,
                                         @RequestParam String name,
@@ -80,7 +81,7 @@ public class UserController {
      */
     @Log("更新用户信息")
     @PatchMapping("/user")
-    public ResponseEntity<?> updateUserInfo(@MustLogin(role = {MustLogin.ROLE.ADMIN, MustLogin.ROLE.TEACHER, MustLogin.ROLE.STUDENT}) LoginUser loginUser,
+    public ResponseEntity<?> updateUserInfo(@MustLogin LoginUser loginUser,
                                             @RequestBody User user) {
         userService.updateUserInfo(loginUser, user);
         return RestModel.noContent();

@@ -17,7 +17,7 @@ public @interface MustLogin {
      *
      * @return 角色数组
      */
-    ROLE[] role();
+    ROLE[] role() default {ROLE.ADMIN, ROLE.STUDENT, ROLE.TEACHER};
 
     enum ROLE {
         /**
