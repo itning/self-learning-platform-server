@@ -144,4 +144,14 @@
         <include refid="Base_Column_List"/>
         from user where username = #{username,jdbcType=VARCHAR}
     </select>
+    <select id="selectAllByRoleId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user where role_id = #{roleId,jdbcType=VARCHAR}
+    </select>
+    <select id="countByUserName" resultType="long">
+        select count(0)
+        from user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
 </mapper>

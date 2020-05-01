@@ -1,7 +1,14 @@
 package com.project.selflearningplatformserver.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Attendance {
     private String id;
 
@@ -10,47 +17,4 @@ public class Attendance {
     private Date gmtCreate;
 
     private Date gmtModified;
-
-    public Attendance(String id, String userId, Date gmtCreate, Date gmtModified) {
-        this.id = id;
-        this.userId = userId;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-    }
-
-    public Attendance() {
-        super();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
 }

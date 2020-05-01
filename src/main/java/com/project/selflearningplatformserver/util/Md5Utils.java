@@ -1,6 +1,9 @@
 package com.project.selflearningplatformserver.util;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+
+import java.security.SecureRandom;
 
 /**
  * @author itning
@@ -16,6 +19,20 @@ public class Md5Utils {
      */
     public static String string2Md5(String src, String salt) {
         return DigestUtils.md5Hex(src + salt);
+    }
+
+    /**
+     * 字符串转MD5
+     *
+     * @param src 字符串
+     * @return <code>Tuple&lt;MD5,SALT&gt;</code>
+     */
+    public static Tuple<String, String> string2Md5(String src) {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[15];
+        random.nextBytes(bytes);
+        String salt = Base64.encodeBase64String(bytes);
+        return new Tuple<>(string2Md5(src, salt), salt);
     }
 
     /**

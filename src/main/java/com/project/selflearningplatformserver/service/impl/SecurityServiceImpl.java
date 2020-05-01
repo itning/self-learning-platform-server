@@ -29,7 +29,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public String login(String username, String password) throws SecurityServerException, JsonProcessingException {
+    public String login(String username, String password) throws JsonProcessingException {
         User user = userMapper.selectByUserName(username).orElseThrow(() -> new SecurityServerException("用户名不存在", HttpStatus.NOT_FOUND));
         if (!Md5Utils.checkEquals(password, user.getSalt(), user.getPassword())) {
             throw new SecurityServerException("密码错误", HttpStatus.BAD_REQUEST);

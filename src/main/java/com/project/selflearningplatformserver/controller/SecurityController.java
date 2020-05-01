@@ -26,8 +26,17 @@ public class SecurityController {
         this.securityService = securityService;
     }
 
+    /**
+     * 登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return ResponseEntity
+     * @throws JsonProcessingException see {@link SecurityService#login}
+     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) throws JsonProcessingException {
+    public ResponseEntity<?> login(@RequestParam String username,
+                                   @RequestParam String password) throws JsonProcessingException {
         return RestModel.ok(securityService.login(username, password));
     }
 }

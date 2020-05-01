@@ -2,6 +2,7 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserMapper {
@@ -18,4 +19,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     Optional<User> selectByUserName(String username);
+
+    List<User> selectAllByRoleId(String roleId);
+
+    long countByUserName(String username);
 }

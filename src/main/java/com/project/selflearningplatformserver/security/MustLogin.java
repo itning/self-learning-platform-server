@@ -23,18 +23,18 @@ public @interface MustLogin {
         /**
          * 管理员
          */
-        ADMIN("1", "管理员"),
-        /**
-         * 学生
-         */
-        STUDENT("2", "学生"),
+        ADMIN("a", "管理员"),
         /**
          * 教师
          */
-        TEACHER("3", "教师");
+        TEACHER("b", "教师"),
+        /**
+         * 学生
+         */
+        STUDENT("c", "学生");
 
-        private String id;
-        private String name;
+        private final String id;
+        private final String name;
 
         ROLE(String id, String name) {
             this.id = id;
