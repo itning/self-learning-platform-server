@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.project.selflearningplatformserver.entity.StudentWork">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="learning_content_id" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="file_uri" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="score" javaType="java.lang.Integer" jdbcType="TINYINT" />
       <arg column="suggest" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,7 +12,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, learning_content_id, file_uri, score, suggest, gmt_create, gmt_modified
+    id, file_uri, score, suggest, gmt_create, gmt_modified
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -26,21 +25,18 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
-    insert into student_work (id, learning_content_id, file_uri, 
-      score, suggest, gmt_create, 
-      gmt_modified)
-    values (#{id,jdbcType=CHAR}, #{learningContentId,jdbcType=CHAR}, #{fileUri,jdbcType=VARCHAR}, 
-      #{score,jdbcType=TINYINT}, #{suggest,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP})
+    insert into student_work (id, file_uri, score, 
+      suggest, gmt_create, gmt_modified
+      )
+    values (#{id,jdbcType=CHAR}, #{fileUri,jdbcType=VARCHAR}, #{score,jdbcType=TINYINT}, 
+      #{suggest,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
     insert into student_work
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="learningContentId != null">
-        learning_content_id,
       </if>
       <if test="fileUri != null">
         file_uri,
@@ -62,9 +58,6 @@
       <if test="id != null">
         #{id,jdbcType=CHAR},
       </if>
-      <if test="learningContentId != null">
-        #{learningContentId,jdbcType=CHAR},
-      </if>
       <if test="fileUri != null">
         #{fileUri,jdbcType=VARCHAR},
       </if>
@@ -85,9 +78,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
     update student_work
     <set>
-      <if test="learningContentId != null">
-        learning_content_id = #{learningContentId,jdbcType=CHAR},
-      </if>
       <if test="fileUri != null">
         file_uri = #{fileUri,jdbcType=VARCHAR},
       </if>
@@ -108,8 +98,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
     update student_work
-    set learning_content_id = #{learningContentId,jdbcType=CHAR},
-      file_uri = #{fileUri,jdbcType=VARCHAR},
+    set file_uri = #{fileUri,jdbcType=VARCHAR},
       score = #{score,jdbcType=TINYINT},
       suggest = #{suggest,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
