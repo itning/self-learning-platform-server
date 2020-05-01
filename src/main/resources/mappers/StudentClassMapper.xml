@@ -98,4 +98,9 @@
         from student_class
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student_class where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>
