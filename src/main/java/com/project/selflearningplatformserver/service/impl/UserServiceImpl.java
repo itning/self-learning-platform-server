@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.User;
+import com.project.selflearningplatformserver.exception.IdNotFoundException;
 import com.project.selflearningplatformserver.exception.IllegalFiledException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
 import com.project.selflearningplatformserver.exception.SecurityServerException;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -99,6 +101,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delUserInfo(String userId) {
-
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (Objects.isNull(user)) {
+            throw new IdNotFoundException("用户ID不存在");
+        }
+        if (LoginUser.ROLE_ADMIN_ID.equals(user.getRoleId())) {
+            throw new SecurityServerException("无法删除管理员账户", HttpStatus.BAD_REQUEST);
+        }
+        userMapper.deleteByPrimaryKey(userId);
     }
 }
