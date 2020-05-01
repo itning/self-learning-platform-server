@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.Attendance;
 
+import java.util.List;
+
 public interface AttendanceMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,10 @@ public interface AttendanceMapper {
     int updateByPrimaryKeySelective(Attendance record);
 
     int updateByPrimaryKey(Attendance record);
+
+    List<Attendance> selectAll();
+
+    List<Attendance> selectAllByUserRoleId(String roleId);
+
+    long countByPrimaryKey(String id);
 }
