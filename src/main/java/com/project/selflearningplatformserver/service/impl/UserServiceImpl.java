@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countByUserName(username) != 0L) {
             throw new IllegalFiledException("用户名已存在");
         }
-        Date date = new Date();
         Tuple<String, String> md5 = Md5Utils.string2Md5(username);
+        Date date = new Date();
         User user = new User();
         user.setId(UUID.randomUUID().toString());
         user.setName(name);

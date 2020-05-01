@@ -14,4 +14,6 @@ public interface StudentClassMapper {
     int updateByPrimaryKeySelective(StudentClass record);
 
     int updateByPrimaryKey(StudentClass record);
+
+    long countByPrimaryKey(String id);
 }

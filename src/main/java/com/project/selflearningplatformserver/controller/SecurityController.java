@@ -39,4 +39,21 @@ public class SecurityController {
                                    @RequestParam String password) throws JsonProcessingException {
         return RestModel.ok(securityService.login(username, password));
     }
+
+    /**
+     * 学生注册
+     *
+     * @param username       用户名
+     * @param password       密码
+     * @param name           姓名
+     * @param studentClassId 所属班级ID（可选）
+     * @return ResponseEntity
+     */
+    @PostMapping("/reg")
+    public ResponseEntity<?> registration(@RequestParam String username,
+                                          @RequestParam String password,
+                                          @RequestParam String name,
+                                          @RequestParam(required = false, defaultValue = "") String studentClassId) {
+        return RestModel.created(securityService.reg(username, password, name, studentClassId));
+    }
 }
