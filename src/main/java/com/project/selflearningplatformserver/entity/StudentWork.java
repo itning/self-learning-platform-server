@@ -12,8 +12,6 @@ import java.util.Date;
 public class StudentWork {
     private String id;
 
-    private String learningContentId;
-
     private String fileUri;
 
     private Integer score;
