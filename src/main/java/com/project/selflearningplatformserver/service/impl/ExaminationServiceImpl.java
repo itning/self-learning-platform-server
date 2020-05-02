@@ -77,7 +77,7 @@ public class ExaminationServiceImpl implements ExaminationService {
             throw new SecurityServerException("更新失败", HttpStatus.FORBIDDEN);
         }
         examination.setGmtCreate(null);
-        examination.setGmtModified(null);
+        examination.setGmtModified(new Date());
         examination.setUserId(null);
         examinationMapper.updateByPrimaryKeySelective(examination);
         return examination;

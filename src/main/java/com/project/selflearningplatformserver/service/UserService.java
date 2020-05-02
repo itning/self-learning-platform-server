@@ -5,28 +5,26 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.User;
 
+import java.util.List;
+
 /**
  * @author itning
  * @date 2020/5/1 14:27
  */
 public interface UserService {
     /**
-     * 分页获取教师信息
+     * 获取教师信息
      *
-     * @param page 页码
-     * @param size 每页数量
      * @return 分页后的教师信息
      */
-    PageInfo<UserDTO> getAllTeacherUser(int page, int size);
+    List<UserDTO> getAllTeacherUser();
 
     /**
      * 分页获取学生信息
      *
-     * @param page 页码
-     * @param size 每页数量
      * @return 分页后的学生信息
      */
-    PageInfo<UserDTO> getAllStudentUser(int page, int size);
+    List<UserDTO> getAllStudentUser();
 
     /**
      * 新增教师
@@ -47,6 +45,7 @@ public interface UserService {
 
     /**
      * 删除用户信息
+     *
      * @param userId 用户ID
      */
     void delUserInfo(String userId);

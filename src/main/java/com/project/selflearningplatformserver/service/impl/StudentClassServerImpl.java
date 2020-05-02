@@ -73,7 +73,7 @@ public class StudentClassServerImpl implements StudentClassServer {
             throw new NullFiledException("班级名为空");
         }
         studentClass.setGmtCreate(null);
-        studentClass.setGmtModified(null);
+        studentClass.setGmtModified(new Date());
         studentClass.setUserId(null);
         studentClassMapper.updateByPrimaryKeySelective(studentClass);
         return studentClass;

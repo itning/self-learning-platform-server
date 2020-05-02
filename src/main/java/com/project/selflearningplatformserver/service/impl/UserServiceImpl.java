@@ -1,7 +1,5 @@
 package com.project.selflearningplatformserver.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.User;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,19 +39,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<UserDTO> getAllTeacherUser(int page, int size) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(userMapper.selectAllByRoleId(LoginUser.ROLE_TEACHER_ID).stream().map(user -> OrikaUtils.a2b(user, UserDTO.class)).collect(Collectors.toList()));
+    public List<UserDTO> getAllTeacherUser() {
+        return userMapper.selectAllByRoleId(LoginUser.ROLE_TEACHER_ID).stream().map(user -> OrikaUtils.a2b(user, UserDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public PageInfo<UserDTO> getAllStudentUser(int page, int size) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(userMapper.selectAllByRoleId(LoginUser.ROLE_STUDENT_ID).stream().map(user -> OrikaUtils.a2b(user, UserDTO.class)).collect(Collectors.toList()));
+    public List<UserDTO> getAllStudentUser() {
+        return userMapper.selectAllByRoleId(LoginUser.ROLE_STUDENT_ID).stream().map(user -> OrikaUtils.a2b(user, UserDTO.class)).collect(Collectors.toList());
     }
 
     @Override
     public UserDTO newTeacher(String name, String username) {
+        if (StringUtils.isAnyBlank(name, username)) {
+            throw new NullFiledException("参数为空");
+        }
         if (userMapper.countByUserName(username) != 0L) {
             throw new IllegalFiledException("用户名已存在");
         }
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserInfo(LoginUser loginUser, User user) {
         user.setGmtCreate(null);
-        user.setGmtModified(null);
+        user.setGmtModified(new Date());
         user.setUsername(null);
         // 管理员修改用户信息
         if (LoginUser.ROLE_ADMIN_ID.equals(loginUser.getRoleId())) {

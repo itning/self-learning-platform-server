@@ -73,7 +73,7 @@ public class SubjectServiceImpl implements SubjectService {
             throw new NullFiledException("科目名为空");
         }
         subject.setGmtCreate(null);
-        subject.setGmtModified(null);
+        subject.setGmtModified(new Date());
         subject.setUserId(null);
         subjectMapper.updateByPrimaryKeySelective(subject);
         return subject;

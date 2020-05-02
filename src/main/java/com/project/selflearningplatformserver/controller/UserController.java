@@ -28,15 +28,11 @@ public class UserController {
      * 管理员获取所有教师信息
      *
      * @param loginUser 登录用户
-     * @param page      页码
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/teachers")
-    public ResponseEntity<?> getAllTeachers(@MustAdminLogin LoginUser loginUser,
-                                            @RequestParam(defaultValue = "1") int page,
-                                            @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(userService.getAllTeacherUser(page, size));
+    public ResponseEntity<?> getAllTeachers(@MustAdminLogin LoginUser loginUser) {
+        return RestModel.ok(userService.getAllTeacherUser());
     }
 
 
@@ -44,15 +40,11 @@ public class UserController {
      * 管理员获取所有学生信息
      *
      * @param loginUser 登录用户
-     * @param page      页码
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/students")
-    public ResponseEntity<?> getAllStudents(@MustAdminLogin LoginUser loginUser,
-                                            @RequestParam(defaultValue = "1") int page,
-                                            @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(userService.getAllStudentUser(page, size));
+    public ResponseEntity<?> getAllStudents(@MustAdminLogin LoginUser loginUser) {
+        return RestModel.ok(userService.getAllStudentUser());
     }
 
     /**

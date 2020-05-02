@@ -55,6 +55,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         }
         Announcement announcement = new Announcement();
         announcement.setId(id);
+        announcement.setGmtModified(new Date());
         announcement.setContent(content);
         announcementMapper.updateByPrimaryKeySelective(announcement);
         return announcement;

@@ -114,7 +114,7 @@ public class ExaminationScoreServiceImpl implements ExaminationScoreService {
         if (!loginUser.getId().equals(examination.getUserId())) {
             throw new SecurityServerException("修改失败", HttpStatus.FORBIDDEN);
         }
-        examinationScore.setGmtModified(null);
+        examinationScore.setGmtModified(new Date());
         examinationScore.setGmtCreate(null);
         examinationScoreMapper.updateByPrimaryKeySelective(examinationScore);
         ExaminationScoreDTO examinationScoreDTO = OrikaUtils.a2b(examinationScore, ExaminationScoreDTO.class);
