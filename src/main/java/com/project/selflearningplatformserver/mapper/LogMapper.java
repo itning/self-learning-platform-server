@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.Log;
 
+import java.util.List;
+
 public interface LogMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,6 @@ public interface LogMapper {
     int updateByPrimaryKeySelective(Log record);
 
     int updateByPrimaryKey(Log record);
+
+    List<Log> selectAll();
 }

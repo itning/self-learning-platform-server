@@ -1,5 +1,6 @@
 package com.project.selflearningplatformserver.dto;
 
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  *
  * @author itning
  */
+@ToString
 public class RestModel<T> implements Serializable {
     private int code;
     private String msg;
