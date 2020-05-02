@@ -1,8 +1,9 @@
 package com.project.selflearningplatformserver.service;
 
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.Examination;
+
+import java.util.List;
 
 /**
  * 考试信息
@@ -15,11 +16,9 @@ public interface ExaminationService {
      * 教师获取考试信息
      *
      * @param loginUser 登录用户
-     * @param page      页码
-     * @param size      每页数量
      * @return 分页的考试信息集合
      */
-    PageInfo<Examination> getAllExamination(LoginUser loginUser, int page, int size);
+    List<Examination> getAllExamination(LoginUser loginUser);
 
     /**
      * 教师删除考试信息

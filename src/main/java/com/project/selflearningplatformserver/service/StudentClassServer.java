@@ -1,6 +1,7 @@
 package com.project.selflearningplatformserver.service;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
+import com.project.selflearningplatformserver.dto.StudentClassDTO;
 import com.project.selflearningplatformserver.entity.StudentClass;
 
 import java.util.List;
@@ -45,4 +46,11 @@ public interface StudentClassServer {
      * @return 修改的班级
      */
     StudentClass updateStudentClass(LoginUser loginUser, StudentClass studentClass);
+
+    /**
+     * 获取所有班级信息
+     *
+     * @return 班级集合
+     */
+    List<StudentClassDTO> getAll();
 }

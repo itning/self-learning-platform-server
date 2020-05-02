@@ -1,7 +1,5 @@
 package com.project.selflearningplatformserver.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.AttendanceDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
@@ -20,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,18 +40,15 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public PageInfo<AttendanceDTO> getAllAttendances(int page, int size, String roleId) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(
-                attendanceMapper.selectAllByUserRoleId(roleId)
-                        .stream()
-                        .map(attendance -> {
-                            AttendanceDTO attendanceDTO = OrikaUtils.a2b(attendance, AttendanceDTO.class);
-                            attendanceDTO.setUser(OrikaUtils.a2b(userMapper.selectByPrimaryKey(attendance.getUserId()), UserDTO.class));
-                            return attendanceDTO;
-                        })
-                        .collect(Collectors.toList())
-        );
+    public List<AttendanceDTO> getAllAttendances(String roleId) {
+        return attendanceMapper.selectAllByUserRoleId(roleId)
+                .stream()
+                .map(attendance -> {
+                    AttendanceDTO attendanceDTO = OrikaUtils.a2b(attendance, AttendanceDTO.class);
+                    attendanceDTO.setUser(OrikaUtils.a2b(userMapper.selectByPrimaryKey(attendance.getUserId()), UserDTO.class));
+                    return attendanceDTO;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

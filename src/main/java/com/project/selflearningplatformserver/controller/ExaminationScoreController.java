@@ -29,16 +29,12 @@ public class ExaminationScoreController {
      *
      * @param loginUser     登录用户
      * @param examinationId 考试信息ID
-     * @param page          分页
-     * @param size          每页数量
      * @return ResponseEntity
      */
     @GetMapping("/examination_scores")
     public ResponseEntity<?> allExaminationScoreInfo(@MustTeacherLogin LoginUser loginUser,
-                                                     @RequestParam String examinationId,
-                                                     @RequestParam(defaultValue = "1") int page,
-                                                     @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(examinationScoreService.getAllByExaminationId(loginUser, examinationId, page, size));
+                                                     @RequestParam String examinationId) {
+        return RestModel.ok(examinationScoreService.getAllByExaminationId(loginUser, examinationId));
     }
 
     /**

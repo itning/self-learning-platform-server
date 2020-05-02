@@ -1,9 +1,10 @@
 package com.project.selflearningplatformserver.service;
 
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.ExaminationScoreDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.ExaminationScore;
+
+import java.util.List;
 
 /**
  * 某考试信息所有分数
@@ -17,11 +18,9 @@ public interface ExaminationScoreService {
      *
      * @param loginUser     登录用户
      * @param examinationId 考试信息ID
-     * @param page          分页
-     * @param size          每页数量
      * @return 分页的考试分数信息
      */
-    PageInfo<ExaminationScoreDTO> getAllByExaminationId(LoginUser loginUser, String examinationId, int page, int size);
+    List<ExaminationScoreDTO> getAllByExaminationId(LoginUser loginUser, String examinationId);
 
     /**
      * 教师删除考试分数信息

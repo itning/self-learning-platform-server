@@ -33,16 +33,12 @@ public class AttendanceController {
      *
      * @param loginUser 登录用户
      * @param roleId    要获取的角色ID
-     * @param page      分页
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/attendances")
     public ResponseEntity<?> getAllAttendance(@MustAdminLogin LoginUser loginUser,
-                                              @RequestParam String roleId,
-                                              @RequestParam(defaultValue = "1") int page,
-                                              @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(attendanceService.getAllAttendances(page, size, roleId));
+                                              @RequestParam String roleId) {
+        return RestModel.ok(attendanceService.getAllAttendances(roleId));
     }
 
     /**

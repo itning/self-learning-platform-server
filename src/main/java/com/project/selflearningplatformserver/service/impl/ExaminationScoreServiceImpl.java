@@ -1,7 +1,5 @@
 package com.project.selflearningplatformserver.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.ExaminationScoreDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
@@ -20,8 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -49,18 +47,15 @@ public class ExaminationScoreServiceImpl implements ExaminationScoreService {
     }
 
     @Override
-    public PageInfo<ExaminationScoreDTO> getAllByExaminationId(LoginUser loginUser, String examinationId, int page, int size) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(
-                examinationScoreMapper.selectAllByExaminationId(examinationId)
-                        .stream()
-                        .map(examinationScore -> {
-                            ExaminationScoreDTO examinationScoreDTO = OrikaUtils.a2b(examinationScore, ExaminationScoreDTO.class);
-                            examinationScoreDTO.setUser(OrikaUtils.a2b(userMapper.selectByPrimaryKey(examinationScore.getStudentId()), UserDTO.class));
-                            return examinationScoreDTO;
-                        })
-                        .collect(Collectors.toList())
-        );
+    public List<ExaminationScoreDTO> getAllByExaminationId(LoginUser loginUser, String examinationId) {
+        return examinationScoreMapper.selectAllByExaminationId(examinationId)
+                .stream()
+                .map(examinationScore -> {
+                    ExaminationScoreDTO examinationScoreDTO = OrikaUtils.a2b(examinationScore, ExaminationScoreDTO.class);
+                    examinationScoreDTO.setUser(OrikaUtils.a2b(userMapper.selectByPrimaryKey(examinationScore.getStudentId()), UserDTO.class));
+                    return examinationScoreDTO;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

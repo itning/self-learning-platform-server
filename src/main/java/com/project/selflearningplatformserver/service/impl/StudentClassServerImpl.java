@@ -1,6 +1,7 @@
 package com.project.selflearningplatformserver.service.impl;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
+import com.project.selflearningplatformserver.dto.StudentClassDTO;
 import com.project.selflearningplatformserver.entity.StudentClass;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
@@ -77,5 +78,10 @@ public class StudentClassServerImpl implements StudentClassServer {
         studentClass.setUserId(null);
         studentClassMapper.updateByPrimaryKeySelective(studentClass);
         return studentClass;
+    }
+
+    @Override
+    public List<StudentClassDTO> getAll() {
+        return studentClassMapper.selectAllWithTeacherName();
     }
 }

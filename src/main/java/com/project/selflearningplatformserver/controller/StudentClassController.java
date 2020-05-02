@@ -24,6 +24,16 @@ public class StudentClassController {
     }
 
     /**
+     * 获取所有班级带教师名
+     *
+     * @return ResponseEntity
+     */
+    @GetMapping("/classes")
+    public ResponseEntity<?> getAllClass() {
+        return RestModel.ok(studentClassServer.getAll());
+    }
+
+    /**
      * 教师获取自己的班级
      *
      * @param loginUser 登录用户

@@ -1,7 +1,5 @@
 package com.project.selflearningplatformserver.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.Examination;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,9 +33,8 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
     @Override
-    public PageInfo<Examination> getAllExamination(LoginUser loginUser, int page, int size) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(examinationMapper.selectAllByUserId(loginUser.getId()));
+    public List<Examination> getAllExamination(LoginUser loginUser) {
+        return examinationMapper.selectAllByUserId(loginUser.getId());
     }
 
     @Override

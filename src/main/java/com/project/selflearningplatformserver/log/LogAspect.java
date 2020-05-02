@@ -78,7 +78,7 @@ public class LogAspect {
             sb.append("\n").append("║").append("调用参数：");
             Arrays.stream(methodArgs)
                     .filter(o -> !(o instanceof LoginUser))
-                    .forEach(itemArg -> sb.append(itemArg.toString()));
+                    .forEach(itemArg -> sb.append("[").append(itemArg.toString()).append("]"));
         }
         sb.append("\n");
         if (Objects.nonNull(th)) {

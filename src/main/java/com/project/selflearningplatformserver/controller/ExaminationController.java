@@ -27,15 +27,11 @@ public class ExaminationController {
      * 教师分页获取所有考试信息
      *
      * @param loginUser 登录用户
-     * @param page      分页
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/examinations")
-    public ResponseEntity<?> allExaminationInfo(@MustTeacherLogin LoginUser loginUser,
-                                                @RequestParam(defaultValue = "1") int page,
-                                                @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(examinationService.getAllExamination(loginUser, page, size));
+    public ResponseEntity<?> allExaminationInfo(@MustTeacherLogin LoginUser loginUser) {
+        return RestModel.ok(examinationService.getAllExamination(loginUser));
     }
 
     /**

@@ -10,6 +10,16 @@
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="BaseResultMapWithTeacherName" type="com.project.selflearningplatformserver.dto.StudentClassDTO">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="teacherName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
         id, name, user_id, gmt_create, gmt_modified
     </sql>
@@ -102,5 +112,10 @@
         select
         <include refid="Base_Column_List"/>
         from student_class where user_id = #{userId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllWithTeacherName" resultMap="BaseResultMapWithTeacherName">
+        select s.id, s.name, s.user_id, s.gmt_create, s.gmt_modified, u.name as teacherName
+        from student_class as s
+                 inner join user u on s.user_id = u.id
     </select>
 </mapper>

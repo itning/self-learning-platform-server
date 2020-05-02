@@ -5,6 +5,7 @@ import com.project.selflearningplatformserver.dto.AttendanceDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 出勤
@@ -16,12 +17,10 @@ public interface AttendanceService {
     /**
      * 管理员获取出勤记录
      *
-     * @param page   页码
-     * @param size   每页数量
      * @param roleId 角色
      * @return 出勤记录
      */
-    PageInfo<AttendanceDTO> getAllAttendances(int page, int size, String roleId);
+    List<AttendanceDTO> getAllAttendances(String roleId);
 
     /**
      * 教师/学生新增出勤记录
