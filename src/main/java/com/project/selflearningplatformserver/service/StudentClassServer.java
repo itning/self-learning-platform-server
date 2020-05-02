@@ -2,6 +2,7 @@ package com.project.selflearningplatformserver.service;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.StudentClassDTO;
+import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.StudentClass;
 
 import java.util.List;
@@ -53,4 +54,12 @@ public interface StudentClassServer {
      * @return 班级集合
      */
     List<StudentClassDTO> getAll();
+
+    /**
+     * 获取某教师的所有班级学生
+     *
+     * @param loginUser 登录用户
+     * @return 所有班级学生
+     */
+    List<UserDTO> getAllStudentInClass(LoginUser loginUser);
 }

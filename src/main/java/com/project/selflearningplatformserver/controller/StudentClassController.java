@@ -45,6 +45,17 @@ public class StudentClassController {
     }
 
     /**
+     * 教师获取自己的学生（自己所有班级的所有学生）
+     *
+     * @param loginUser 登录用户
+     * @return ResponseEntity
+     */
+    @GetMapping("/student_in_class")
+    public ResponseEntity<?> getAllStudentInClass(@MustTeacherLogin LoginUser loginUser) {
+        return RestModel.ok(studentClassServer.getAllStudentInClass(loginUser));
+    }
+
+    /**
      * 教师新增班级
      *
      * @param loginUser 登录用户

@@ -62,7 +62,7 @@ public class ExaminationScoreController {
     @Log("新增考试分数")
     @PostMapping("/examination_score")
     public ResponseEntity<?> newExaminationScore(@MustTeacherLogin LoginUser loginUser,
-                                                 @RequestParam ExaminationScore examinationScore) {
+                                                 ExaminationScore examinationScore) {
         return RestModel.created(examinationScoreService.newExaminationScore(loginUser, examinationScore));
     }
 

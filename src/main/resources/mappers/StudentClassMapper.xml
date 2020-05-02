@@ -118,4 +118,11 @@
         from student_class as s
                  inner join user u on s.user_id = u.id
     </select>
+    <select id="selectAllStudentInClass" resultType="com.project.selflearningplatformserver.dto.UserDTO">
+        SELECT u.id, u.name, u.username, u.freeze, u.role_id, u.gmt_create, u.gmt_modified
+        FROM student_class
+                 INNER JOIN student ON student.student_class_id = student_class.id
+                 INNER JOIN `user` as u ON u.id = student.user_id
+        WHERE student_class.user_id = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>
