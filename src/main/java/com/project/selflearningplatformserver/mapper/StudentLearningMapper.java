@@ -2,6 +2,8 @@ package com.project.selflearningplatformserver.mapper;
 
 import com.project.selflearningplatformserver.entity.StudentLearning;
 
+import java.util.List;
+
 public interface StudentLearningMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,8 @@ public interface StudentLearningMapper {
     int updateByPrimaryKeySelective(StudentLearning record);
 
     int updateByPrimaryKey(StudentLearning record);
+
+    List<StudentLearning> selectAllByStudentId(String studentId);
+
+    long countByPrimaryKey(String id);
 }

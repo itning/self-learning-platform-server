@@ -18,4 +18,6 @@ public interface LearningContentMapper {
     int updateByPrimaryKey(LearningContent record);
 
     List<LearningContent> selectAllBySubjectId(String subjectId);
+
+    long countByPrimaryKey(String id);
 }

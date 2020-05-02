@@ -99,4 +99,9 @@
         <include refid="Base_Column_List"/>
         from learning_content where subject_id = #{subjectId,jdbcType=VARCHAR}
     </select>
+    <select id="countByPrimaryKey" resultType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from learning_content where id = #{id,jdbcType=VARCHAR}
+    </select>
 </mapper>
