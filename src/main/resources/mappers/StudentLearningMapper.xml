@@ -20,6 +20,22 @@
             <arg column="student_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
+    <resultMap id="LearningContentDTOBaseResultMap"
+               type="com.project.selflearningplatformserver.dto.LearningContentDTO">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="subject_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="content_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="size" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="studentLearningId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="chooseDate" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
         id, learning_content_id, student_id, gmt_create, gmt_modified
     </sql>
@@ -104,10 +120,21 @@
             gmt_modified        = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=CHAR}
     </update>
-    <select id="selectAllByStudentId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from student_learning where student_id = #{studentId,jdbcType=VARCHAR}
+    <select id="selectAllByStudentId" resultMap="LearningContentDTOBaseResultMap">
+        select lc.id,
+               lc.subject_id,
+               lc.content_uri,
+               lc.extension_name,
+               lc.size,
+               lc.mime,
+               lc.name,
+               lc.gmt_create,
+               lc.gmt_modified,
+               sl.id         as studentLearningId,
+               sl.gmt_create as chooseDate
+        from learning_content as lc
+                 inner join student_learning sl on lc.id = sl.learning_content_id
+        where sl.student_id = #{studentId,jdbcType=VARCHAR}
     </select>
     <select id="countByPrimaryKey" resultType="long">
         select count(0)

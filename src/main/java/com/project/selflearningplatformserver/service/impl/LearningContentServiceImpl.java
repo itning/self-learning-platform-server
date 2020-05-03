@@ -96,11 +96,6 @@ public class LearningContentServiceImpl implements LearningContentService {
 
     @Override
     public LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, String subjectId, String name) {
-        System.out.println(file.getSize());
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getContentType());
-        System.out.println(name);
-        System.out.println(subjectId);
         if (StringUtils.isAnyBlank(subjectId, name)) {
             throw new NullFiledException("参数为空");
         }
@@ -155,5 +150,10 @@ public class LearningContentServiceImpl implements LearningContentService {
         learningContent.setName(name);
         learningContentMapper.updateByPrimaryKeySelective(learningContent);
         return learningContent;
+    }
+
+    @Override
+    public List<LearningContent> getAllCanLearningContent(LoginUser loginUser) {
+        return learningContentMapper.selectAllCanStudy(loginUser.getId());
     }
 }

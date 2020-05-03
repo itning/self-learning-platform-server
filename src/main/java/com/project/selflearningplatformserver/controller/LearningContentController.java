@@ -5,6 +5,7 @@ import com.project.selflearningplatformserver.dto.RestModel;
 import com.project.selflearningplatformserver.entity.LearningContent;
 import com.project.selflearningplatformserver.log.Log;
 import com.project.selflearningplatformserver.security.MustLogin;
+import com.project.selflearningplatformserver.security.MustStudentLogin;
 import com.project.selflearningplatformserver.security.MustTeacherLogin;
 import com.project.selflearningplatformserver.service.LearningContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,15 @@ public class LearningContentController {
                                                    @RequestBody LearningContent learningContent) {
         learningContentService.updateLearningContent(loginUser, learningContent.getId(), learningContent.getName());
         return RestModel.noContent();
+    }
+
+    /**
+     * 学生获取所有可以学习的内容（排除已经选择的）
+     *
+     * @return ResponseEntity
+     */
+    @GetMapping("/learning_content_of_student")
+    public ResponseEntity<?> getAllCanLearningContent(@MustStudentLogin LoginUser loginUser) {
+        return RestModel.ok(learningContentService.getAllCanLearningContent(loginUser));
     }
 }

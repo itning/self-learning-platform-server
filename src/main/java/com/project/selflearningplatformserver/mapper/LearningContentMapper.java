@@ -20,4 +20,6 @@ public interface LearningContentMapper {
     List<LearningContent> selectAllBySubjectId(String subjectId);
 
     long countByPrimaryKey(String id);
+
+    List<LearningContent> selectAllCanStudy(String studentId);
 }

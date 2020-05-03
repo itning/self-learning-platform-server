@@ -40,7 +40,7 @@ public class StudentLearningController {
     }
 
     /**
-     * 获取我的学习
+     * 学生获取学习内容带学生学习ID
      *
      * @param loginUser 登录用户
      * @return ResponseEntity

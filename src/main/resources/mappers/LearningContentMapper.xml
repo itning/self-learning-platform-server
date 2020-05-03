@@ -150,4 +150,10 @@
         from learning_content
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="selectAllCanStudy" resultMap="BaseResultMap">
+        SELECT *
+        FROM learning_content
+        WHERE id not in
+              (SELECT learning_content_id FROM student_learning WHERE student_id = #{studentId,jdbcType=VARCHAR})
+    </select>
 </mapper>

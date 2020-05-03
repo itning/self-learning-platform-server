@@ -1,5 +1,6 @@
 package com.project.selflearningplatformserver.mapper;
 
+import com.project.selflearningplatformserver.dto.LearningContentDTO;
 import com.project.selflearningplatformserver.dto.StudentLearningDTO;
 import com.project.selflearningplatformserver.entity.StudentLearning;
 
@@ -18,7 +19,7 @@ public interface StudentLearningMapper {
 
     int updateByPrimaryKey(StudentLearning record);
 
-    List<StudentLearning> selectAllByStudentId(String studentId);
+    List<LearningContentDTO> selectAllByStudentId(String studentId);
 
     long countByPrimaryKey(String id);
 

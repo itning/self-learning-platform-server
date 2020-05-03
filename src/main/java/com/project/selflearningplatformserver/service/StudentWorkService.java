@@ -3,6 +3,7 @@ package com.project.selflearningplatformserver.service;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.StudentWork;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,4 +40,22 @@ public interface StudentWorkService {
      * @param range     {@link HttpHeaders#RANGE}
      */
     void downloadWorkFile(LoginUser loginUser, String id, HttpServletResponse response, String range);
+
+    /**
+     * 学生上传作业
+     *
+     * @param loginUser         登录用户
+     * @param studentLearningId 学生学习ID
+     * @param file              文件
+     * @return 作业信息
+     */
+    StudentWork upload(LoginUser loginUser, String studentLearningId, MultipartFile file);
+
+    /**
+     * 学生获取自己的作业
+     * @param loginUser 登录用户
+     * @param learningContentId 学习内容ID
+     * @return 作业信息
+     */
+    StudentWork getOwnWork(LoginUser loginUser, String learningContentId);
 }

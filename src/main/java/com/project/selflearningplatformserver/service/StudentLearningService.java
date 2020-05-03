@@ -1,5 +1,6 @@
 package com.project.selflearningplatformserver.service;
 
+import com.project.selflearningplatformserver.dto.LearningContentDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.StudentLearningDTO;
 import com.project.selflearningplatformserver.entity.StudentLearning;
@@ -26,7 +27,7 @@ public interface StudentLearningService {
      * @param loginUser 登录用户
      * @return 分页的学习内容
      */
-    List<StudentLearning> getMyLearning(LoginUser loginUser);
+    List<LearningContentDTO> getMyLearning(LoginUser loginUser);
 
     /**
      * 学生取消学习该内容

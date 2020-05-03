@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,5 +73,34 @@ public class StudentWorkController {
                                             @PathVariable String id) {
         studentWorkService.delWork(loginUser, id);
         return RestModel.noContent();
+    }
+
+    /**
+     * 学生上传作业
+     *
+     * @param loginUser         登录用户
+     * @param file              文件
+     * @param studentLearningId 学生学习ID
+     * @return ResponseEntity
+     */
+    @Log("学生上传作业")
+    @PostMapping("/student_work")
+    public ResponseEntity<?> studentUploadWork(@MustStudentLogin LoginUser loginUser,
+                                               @RequestParam("file") MultipartFile file,
+                                               @RequestParam String studentLearningId) {
+        return RestModel.created(studentWorkService.upload(loginUser, studentLearningId, file));
+    }
+
+    /**
+     * 学生获取自己的作业
+     *
+     * @param loginUser         登录用户
+     * @param learningContentId 学习内容ID
+     * @return ResponseEntity
+     */
+    @GetMapping("/student_work")
+    public ResponseEntity<?> getOwnWork(@MustStudentLogin LoginUser loginUser,
+                                        @RequestParam String learningContentId) {
+        return RestModel.ok(studentWorkService.getOwnWork(loginUser, learningContentId));
     }
 }

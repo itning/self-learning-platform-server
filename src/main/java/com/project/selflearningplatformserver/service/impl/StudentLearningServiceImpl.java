@@ -1,5 +1,7 @@
 package com.project.selflearningplatformserver.service.impl;
 
+import com.project.selflearningplatformserver.config.AppProperties;
+import com.project.selflearningplatformserver.dto.LearningContentDTO;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.StudentLearningDTO;
 import com.project.selflearningplatformserver.entity.StudentLearning;
@@ -9,11 +11,13 @@ import com.project.selflearningplatformserver.mapper.LearningContentMapper;
 import com.project.selflearningplatformserver.mapper.StudentLearningMapper;
 import com.project.selflearningplatformserver.mapper.StudentWorkMapper;
 import com.project.selflearningplatformserver.service.StudentLearningService;
+import com.project.selflearningplatformserver.video.VideoTransformHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,12 +33,16 @@ public class StudentLearningServiceImpl implements StudentLearningService {
     private final StudentLearningMapper studentLearningMapper;
     private final LearningContentMapper learningContentMapper;
     private final StudentWorkMapper studentWorkMapper;
+    private final VideoTransformHandler videoTransformHandler;
+    private final AppProperties appProperties;
 
     @Autowired
-    public StudentLearningServiceImpl(StudentLearningMapper studentLearningMapper, LearningContentMapper learningContentMapper, StudentWorkMapper studentWorkMapper) {
+    public StudentLearningServiceImpl(StudentLearningMapper studentLearningMapper, LearningContentMapper learningContentMapper, StudentWorkMapper studentWorkMapper, VideoTransformHandler videoTransformHandler, AppProperties appProperties) {
         this.studentLearningMapper = studentLearningMapper;
         this.learningContentMapper = learningContentMapper;
         this.studentWorkMapper = studentWorkMapper;
+        this.videoTransformHandler = videoTransformHandler;
+        this.appProperties = appProperties;
     }
 
     @Override
@@ -57,8 +65,11 @@ public class StudentLearningServiceImpl implements StudentLearningService {
     }
 
     @Override
-    public List<StudentLearning> getMyLearning(LoginUser loginUser) {
-        return studentLearningMapper.selectAllByStudentId(loginUser.getId());
+    public List<LearningContentDTO> getMyLearning(LoginUser loginUser) {
+        return studentLearningMapper.selectAllByStudentId(loginUser.getId())
+                .parallelStream()
+                .filter(learningContent -> !videoTransformHandler.isNowTranscoding(new File(appProperties.getLearningContentDir() + learningContent.getContentUri())))
+                .collect(Collectors.toList());
     }
 
     @Override

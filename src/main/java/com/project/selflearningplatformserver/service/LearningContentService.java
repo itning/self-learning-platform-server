@@ -43,8 +43,16 @@ public interface LearningContentService {
     /**
      * 教师更新学习内容
      *
-     * @param loginUser       登录用户
+     * @param loginUser 登录用户
      * @return 修改的学习内容
      */
     LearningContent updateLearningContent(LoginUser loginUser, String id, String name);
+
+    /**
+     * 学生获取所有可以学习的内容（排除已经选择的）
+     *
+     * @param loginUser 登录用户
+     * @return 学习内容集合
+     */
+    List<LearningContent> getAllCanLearningContent(LoginUser loginUser);
 }
