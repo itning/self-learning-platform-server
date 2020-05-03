@@ -42,15 +42,11 @@ public class StudentLearningController {
      * 获取我的学习
      *
      * @param loginUser 登录用户
-     * @param page      分页
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/student_learning")
-    public ResponseEntity<?> getMyStudy(@MustStudentLogin LoginUser loginUser,
-                                        @RequestParam(defaultValue = "1") int page,
-                                        @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(studentLearningService.getMyLearning(loginUser, page, size));
+    public ResponseEntity<?> getMyStudy(@MustStudentLogin LoginUser loginUser) {
+        return RestModel.ok(studentLearningService.getMyLearning(loginUser));
     }
 
     /**

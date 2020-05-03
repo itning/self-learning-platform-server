@@ -1,6 +1,5 @@
 package com.project.selflearningplatformserver.service;
 
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.User;

@@ -1,7 +1,5 @@
 package com.project.selflearningplatformserver.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.StudentLearning;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,9 +52,8 @@ public class StudentLearningServiceImpl implements StudentLearningService {
     }
 
     @Override
-    public PageInfo<StudentLearning> getMyLearning(LoginUser loginUser, int page, int size) {
-        PageHelper.startPage(page, size);
-        return new PageInfo<>(studentLearningMapper.selectAllByStudentId(loginUser.getId()));
+    public List<StudentLearning> getMyLearning(LoginUser loginUser) {
+        return studentLearningMapper.selectAllByStudentId(loginUser.getId());
     }
 
     @Override

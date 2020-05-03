@@ -1,8 +1,9 @@
 package com.project.selflearningplatformserver.service;
 
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.StudentLearning;
+
+import java.util.List;
 
 /**
  * @author itning
@@ -22,11 +23,9 @@ public interface StudentLearningService {
      * 学生获取自己的学习内容
      *
      * @param loginUser 登录用户
-     * @param page      页码
-     * @param size      每页数量
      * @return 分页的学习内容
      */
-    PageInfo<StudentLearning> getMyLearning(LoginUser loginUser, int page, int size);
+    List<StudentLearning> getMyLearning(LoginUser loginUser);
 
     /**
      * 学生取消学习该内容
