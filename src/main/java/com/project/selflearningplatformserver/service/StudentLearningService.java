@@ -1,6 +1,7 @@
 package com.project.selflearningplatformserver.service;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
+import com.project.selflearningplatformserver.dto.StudentLearningDTO;
 import com.project.selflearningplatformserver.entity.StudentLearning;
 
 import java.util.List;
@@ -34,4 +35,13 @@ public interface StudentLearningService {
      * @param studentLearningId 学生学习ID
      */
     void delMyLearning(LoginUser loginUser, String studentLearningId);
+
+    /**
+     * 教师获取学生学习情况
+     *
+     * @param loginUser         登录用户
+     * @param learningContentId 学习内容ID
+     * @return 学生学习情况
+     */
+    List<StudentLearningDTO> getAllStudentInLearning(LoginUser loginUser, String learningContentId);
 }

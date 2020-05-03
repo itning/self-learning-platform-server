@@ -27,6 +27,11 @@ public class AppProperties {
     private String learningContentTranscodingDir;
 
     /**
+     * 学生作业文件存放目录
+     */
+    private String studentWorkDir;
+
+    /**
      * FFmpeg Bin 目录
      */
     private String ffmpegBinDir;
@@ -41,6 +46,10 @@ public class AppProperties {
 
     public void setFfmpegBinDir(String ffmpegBinDir) {
         this.ffmpegBinDir = addDirSeparator(ffmpegBinDir);
+    }
+
+    public void setStudentWorkDir(String studentWorkDir) {
+        this.studentWorkDir = addDirSeparator(studentWorkDir);
     }
 
     /**

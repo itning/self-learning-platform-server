@@ -4,6 +4,7 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.RestModel;
 import com.project.selflearningplatformserver.log.Log;
 import com.project.selflearningplatformserver.security.MustStudentLogin;
+import com.project.selflearningplatformserver.security.MustTeacherLogin;
 import com.project.selflearningplatformserver.service.StudentLearningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,19 @@ public class StudentLearningController {
     @GetMapping("/student_learning")
     public ResponseEntity<?> getMyStudy(@MustStudentLogin LoginUser loginUser) {
         return RestModel.ok(studentLearningService.getMyLearning(loginUser));
+    }
+
+    /**
+     * 教师获取所有学生信息（带作业）
+     *
+     * @param loginUser         登录用户
+     * @param learningContentId 学习内容ID
+     * @return ResponseEntity
+     */
+    @GetMapping("/student_learning_teacher")
+    public ResponseEntity<?> getAllStudentInLearning(@MustTeacherLogin LoginUser loginUser,
+                                                     @RequestParam String learningContentId) {
+        return RestModel.ok(studentLearningService.getAllStudentInLearning(loginUser, learningContentId));
     }
 
     /**

@@ -10,6 +10,16 @@
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="BaseResultMapWithStudentName" type="com.project.selflearningplatformserver.dto.StudentLearningDTO">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="learning_content_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="student_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="student_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
         id, learning_content_id, student_id, gmt_create, gmt_modified
     </sql>
@@ -103,5 +113,11 @@
         select count(0)
         from student_learning
         where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectAllWithStudentName" resultMap="BaseResultMapWithStudentName">
+        select sl.id, sl.learning_content_id, sl.student_id, sl.gmt_create, sl.gmt_modified, u.name as student_name
+        from student_learning as sl
+                 inner join user as u on sl.student_id = u.id
+        where learning_content_id = #{learningContentId,jdbcType=VARCHAR}
     </select>
 </mapper>

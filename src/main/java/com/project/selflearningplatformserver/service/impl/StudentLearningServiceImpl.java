@@ -1,11 +1,13 @@
 package com.project.selflearningplatformserver.service.impl;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
+import com.project.selflearningplatformserver.dto.StudentLearningDTO;
 import com.project.selflearningplatformserver.entity.StudentLearning;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
 import com.project.selflearningplatformserver.mapper.LearningContentMapper;
 import com.project.selflearningplatformserver.mapper.StudentLearningMapper;
+import com.project.selflearningplatformserver.mapper.StudentWorkMapper;
 import com.project.selflearningplatformserver.service.StudentLearningService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author itning
@@ -25,11 +28,13 @@ import java.util.UUID;
 public class StudentLearningServiceImpl implements StudentLearningService {
     private final StudentLearningMapper studentLearningMapper;
     private final LearningContentMapper learningContentMapper;
+    private final StudentWorkMapper studentWorkMapper;
 
     @Autowired
-    public StudentLearningServiceImpl(StudentLearningMapper studentLearningMapper, LearningContentMapper learningContentMapper) {
+    public StudentLearningServiceImpl(StudentLearningMapper studentLearningMapper, LearningContentMapper learningContentMapper, StudentWorkMapper studentWorkMapper) {
         this.studentLearningMapper = studentLearningMapper;
         this.learningContentMapper = learningContentMapper;
+        this.studentWorkMapper = studentWorkMapper;
     }
 
     @Override
@@ -62,8 +67,22 @@ public class StudentLearningServiceImpl implements StudentLearningService {
             throw new NullFiledException("学生学习ID为空");
         }
         if (studentLearningMapper.countByPrimaryKey(studentLearningId) == 0L) {
-            throw new IdNotFoundException("学生学习ID不存在");
+            throw new IdNotFoundException("学生学习不存在");
         }
         studentLearningMapper.deleteByPrimaryKey(studentLearningId);
+    }
+
+    @Override
+    public List<StudentLearningDTO> getAllStudentInLearning(LoginUser loginUser, String learningContentId) {
+        if (StringUtils.isBlank(learningContentId)) {
+            throw new NullFiledException("学习内容ID为空");
+        }
+        if (learningContentMapper.countByPrimaryKey(learningContentId) == 0L) {
+            throw new IdNotFoundException("学习内容不存在");
+        }
+        return studentLearningMapper.selectAllWithStudentName(learningContentId)
+                .stream()
+                .peek(studentLearningDTO -> studentLearningDTO.setStudentWork(studentWorkMapper.selectByPrimaryKey(studentLearningDTO.getId())))
+                .collect(Collectors.toList());
     }
 }

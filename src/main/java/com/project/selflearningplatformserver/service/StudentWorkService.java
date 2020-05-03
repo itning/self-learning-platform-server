@@ -2,6 +2,9 @@ package com.project.selflearningplatformserver.service;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.StudentWork;
+import org.springframework.http.HttpHeaders;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author itning
@@ -26,4 +29,14 @@ public interface StudentWorkService {
      * @param studentWorkId 学生作业ID
      */
     void delWork(LoginUser loginUser, String studentWorkId);
+
+    /**
+     * 下载作业
+     *
+     * @param loginUser 登录用户
+     * @param id        作业ID
+     * @param response  {@link HttpServletResponse}
+     * @param range     {@link HttpHeaders#RANGE}
+     */
+    void downloadWorkFile(LoginUser loginUser, String id, HttpServletResponse response, String range);
 }
