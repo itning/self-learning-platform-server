@@ -26,4 +26,6 @@ public interface StudentClassMapper {
     List<StudentClassDTO> selectAllWithTeacherName();
 
     List<UserDTO> selectAllStudentInClass(String userId);
+
+    StudentClassDTO selectOwnClass(String studentId);
 }

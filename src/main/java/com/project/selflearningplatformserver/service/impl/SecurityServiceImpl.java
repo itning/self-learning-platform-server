@@ -58,7 +58,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public UserDTO reg(String username, String password, String name, String studentClassId) {
-        if (StringUtils.isNotBlank(studentClassId) && studentClassMapper.countByPrimaryKey(studentClassId) == 0L) {
+        if (StringUtils.isBlank(studentClassId) || studentClassMapper.countByPrimaryKey(studentClassId) == 0L) {
             throw new IdNotFoundException("班级ID不存在");
         }
         if (StringUtils.isAnyBlank(username, password, name)) {
@@ -82,14 +82,13 @@ public class SecurityServiceImpl implements SecurityService {
         user.setGmtModified(date);
         userMapper.insert(user);
 
-        if (StringUtils.isNotBlank(studentClassId)) {
-            Student student = new Student();
-            student.setUserId(user.getId());
-            student.setStudentClassId(studentClassId);
-            student.setGmtCreate(date);
-            student.setGmtModified(date);
-            studentMapper.insert(student);
-        }
+        Student student = new Student();
+        student.setUserId(user.getId());
+        student.setStudentClassId(studentClassId);
+        student.setGmtCreate(date);
+        student.setGmtModified(date);
+        studentMapper.insert(student);
+
         return OrikaUtils.a2b(user, UserDTO.class);
     }
 }

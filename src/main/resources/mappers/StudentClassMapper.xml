@@ -125,4 +125,11 @@
                  INNER JOIN `user` as u ON u.id = student.user_id
         WHERE student_class.user_id = #{userId,jdbcType=VARCHAR}
     </select>
+    <select id="selectOwnClass" resultMap="BaseResultMapWithTeacherName">
+        select sc.id, sc.name, sc.user_id, sc.gmt_create, sc.gmt_modified, u.name as teacherName
+        from student as s
+                 inner join student_class sc on s.student_class_id = sc.id
+                 inner join user u on sc.user_id = u.id
+        where s.user_id = #{studentId,jdbcType=VARCHAR}
+    </select>
 </mapper>

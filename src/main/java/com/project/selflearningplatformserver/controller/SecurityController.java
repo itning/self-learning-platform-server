@@ -46,14 +46,14 @@ public class SecurityController {
      * @param username       用户名
      * @param password       密码
      * @param name           姓名
-     * @param studentClassId 所属班级ID（可选）
+     * @param studentClassId 所属班级ID
      * @return ResponseEntity
      */
     @PostMapping("/reg")
     public ResponseEntity<?> registration(@RequestParam String username,
                                           @RequestParam String password,
                                           @RequestParam String name,
-                                          @RequestParam(required = false, defaultValue = "") String studentClassId) {
+                                          @RequestParam String studentClassId) {
         return RestModel.created(securityService.reg(username, password, name, studentClassId));
     }
 }

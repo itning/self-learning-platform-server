@@ -4,6 +4,7 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.RestModel;
 import com.project.selflearningplatformserver.entity.StudentClass;
 import com.project.selflearningplatformserver.log.Log;
+import com.project.selflearningplatformserver.security.MustStudentLogin;
 import com.project.selflearningplatformserver.security.MustTeacherLogin;
 import com.project.selflearningplatformserver.service.StudentClassServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,32 @@ public class StudentClassController {
     public ResponseEntity<?> getAllClass() {
         return RestModel.ok(studentClassServer.getAll());
     }
+
+    /**
+     * 学生获取自己所在的班级
+     *
+     * @param loginUser 登录用户
+     * @return ResponseEntity
+     */
+    @GetMapping("/my_classes")
+    public ResponseEntity<?> getStudentClass(@MustStudentLogin LoginUser loginUser) {
+        return RestModel.ok(studentClassServer.getStudentOwnClass(loginUser));
+    }
+
+    /**
+     * 学生加入班级
+     *
+     * @param loginUser 登录用户
+     * @param classId   班级ID
+     * @return ResponseEntity
+     */
+    @Log("学生加入班级")
+    @PostMapping("/join_class")
+    public ResponseEntity<?> joinClass(@MustStudentLogin LoginUser loginUser,
+                                       @RequestParam String classId) {
+        return RestModel.created(studentClassServer.joinClass(loginUser, classId));
+    }
+
 
     /**
      * 教师获取自己的班级
