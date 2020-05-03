@@ -6,15 +6,18 @@ import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.Attendance;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
+import com.project.selflearningplatformserver.exception.SecurityServerException;
 import com.project.selflearningplatformserver.mapper.AttendanceMapper;
 import com.project.selflearningplatformserver.mapper.UserMapper;
 import com.project.selflearningplatformserver.service.AttendanceService;
 import com.project.selflearningplatformserver.util.OrikaUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -53,6 +56,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public AttendanceDTO newAttendance(LoginUser loginUser) {
+        if (attendanceMapper.countUserAttendanceInDate(loginUser.getId(), LocalDate.now()) != 0L) {
+            throw new SecurityServerException("已经出勤", HttpStatus.BAD_REQUEST);
+        }
         Date date = new Date();
         Attendance attendance = new Attendance();
         attendance.setId(UUID.randomUUID().toString());
@@ -67,6 +73,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public AttendanceDTO newAttendance(String userId, LocalDateTime localDateTime) {
+        if (attendanceMapper.countUserAttendanceInDate(userId, localDateTime.toLocalDate()) != 0L) {
+            throw new SecurityServerException("该用户这天已经出勤了", HttpStatus.BAD_REQUEST);
+        }
         Attendance attendance = new Attendance();
         attendance.setId(UUID.randomUUID().toString());
         attendance.setUserId(userId);
