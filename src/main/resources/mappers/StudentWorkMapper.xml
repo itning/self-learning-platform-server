@@ -5,14 +5,17 @@
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="file_uri" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="extension_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="score" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="size" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="suggest" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, file_uri, score, suggest, gmt_create, gmt_modified
+    id, file_uri, mime, extension_name, score, size, suggest, gmt_create, gmt_modified
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,10 +28,12 @@
     where id = #{id,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
-    insert into student_work (id, file_uri, score, 
+    insert into student_work (id, file_uri, mime, 
+      extension_name, score, size, 
       suggest, gmt_create, gmt_modified
       )
-    values (#{id,jdbcType=CHAR}, #{fileUri,jdbcType=VARCHAR}, #{score,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=CHAR}, #{fileUri,jdbcType=VARCHAR}, #{mime,jdbcType=VARCHAR}, 
+      #{extensionName,jdbcType=VARCHAR}, #{score,jdbcType=TINYINT}, #{size,jdbcType=BIGINT}, 
       #{suggest,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -41,8 +46,17 @@
       <if test="fileUri != null">
         file_uri,
       </if>
+      <if test="mime != null">
+        mime,
+      </if>
+      <if test="extensionName != null">
+        extension_name,
+      </if>
       <if test="score != null">
         score,
+      </if>
+      <if test="size != null">
+        size,
       </if>
       <if test="suggest != null">
         suggest,
@@ -61,8 +75,17 @@
       <if test="fileUri != null">
         #{fileUri,jdbcType=VARCHAR},
       </if>
+      <if test="mime != null">
+        #{mime,jdbcType=VARCHAR},
+      </if>
+      <if test="extensionName != null">
+        #{extensionName,jdbcType=VARCHAR},
+      </if>
       <if test="score != null">
         #{score,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=BIGINT},
       </if>
       <if test="suggest != null">
         #{suggest,jdbcType=VARCHAR},
@@ -81,8 +104,17 @@
       <if test="fileUri != null">
         file_uri = #{fileUri,jdbcType=VARCHAR},
       </if>
+      <if test="mime != null">
+        mime = #{mime,jdbcType=VARCHAR},
+      </if>
+      <if test="extensionName != null">
+        extension_name = #{extensionName,jdbcType=VARCHAR},
+      </if>
       <if test="score != null">
         score = #{score,jdbcType=TINYINT},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=BIGINT},
       </if>
       <if test="suggest != null">
         suggest = #{suggest,jdbcType=VARCHAR},
@@ -99,7 +131,10 @@
   <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.StudentWork">
     update student_work
     set file_uri = #{fileUri,jdbcType=VARCHAR},
+      mime = #{mime,jdbcType=VARCHAR},
+      extension_name = #{extensionName,jdbcType=VARCHAR},
       score = #{score,jdbcType=TINYINT},
+      size = #{size,jdbcType=BIGINT},
       suggest = #{suggest,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}

@@ -11,7 +11,7 @@ import com.project.selflearningplatformserver.mapper.UserMapper;
 import com.project.selflearningplatformserver.service.UserService;
 import com.project.selflearningplatformserver.util.Md5Utils;
 import com.project.selflearningplatformserver.util.OrikaUtils;
-import com.project.selflearningplatformserver.util.Tuple;
+import com.project.selflearningplatformserver.util.Tuple2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countByUserName(username) != 0L) {
             throw new IllegalFiledException("用户名已存在");
         }
-        Tuple<String, String> md5 = Md5Utils.string2Md5(username);
+        Tuple2<String, String> md5 = Md5Utils.string2Md5(username);
         Date date = new Date();
         User user = new User();
         user.setId(UUID.randomUUID().toString());
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         }
         // 用户更改密码
         if (StringUtils.isNotBlank(user.getPassword())) {
-            Tuple<String, String> md5 = Md5Utils.string2Md5(user.getPassword());
+            Tuple2<String, String> md5 = Md5Utils.string2Md5(user.getPassword());
             user.setPassword(md5.getT1());
             user.setSalt(md5.getT2());
         }

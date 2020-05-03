@@ -14,7 +14,13 @@ public class StudentWork {
 
     private String fileUri;
 
+    private String mime;
+
+    private String extensionName;
+
     private Integer score;
+
+    private Long size;
 
     private String suggest;
 

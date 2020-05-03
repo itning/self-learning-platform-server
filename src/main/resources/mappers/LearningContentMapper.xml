@@ -6,12 +6,16 @@
             <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="subject_id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="content_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="size" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, subject_id, content_uri, gmt_create, gmt_modified
+        id, subject_id, content_uri, extension_name, size, mime, name, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -26,9 +30,11 @@
     </delete>
     <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         insert into learning_content (id, subject_id, content_uri,
-                                      gmt_create, gmt_modified)
+                                      extension_name, size, mime,
+                                      name, gmt_create, gmt_modified)
         values (#{id,jdbcType=CHAR}, #{subjectId,jdbcType=CHAR}, #{contentUri,jdbcType=VARCHAR},
-                #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+                #{extensionName,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, #{mime,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         insert into learning_content
@@ -41,6 +47,18 @@
             </if>
             <if test="contentUri != null">
                 content_uri,
+            </if>
+            <if test="extensionName != null">
+                extension_name,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="mime != null">
+                mime,
+            </if>
+            <if test="name != null">
+                name,
             </if>
             <if test="gmtCreate != null">
                 gmt_create,
@@ -58,6 +76,18 @@
             </if>
             <if test="contentUri != null">
                 #{contentUri,jdbcType=VARCHAR},
+            </if>
+            <if test="extensionName != null">
+                #{extensionName,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                #{size,jdbcType=BIGINT},
+            </if>
+            <if test="mime != null">
+                #{mime,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="gmtCreate != null">
                 #{gmtCreate,jdbcType=TIMESTAMP},
@@ -77,6 +107,18 @@
             <if test="contentUri != null">
                 content_uri = #{contentUri,jdbcType=VARCHAR},
             </if>
+            <if test="extensionName != null">
+                extension_name = #{extensionName,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                size = #{size,jdbcType=BIGINT},
+            </if>
+            <if test="mime != null">
+                mime = #{mime,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="gmtCreate != null">
                 gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
             </if>
@@ -88,10 +130,14 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         update learning_content
-        set subject_id   = #{subjectId,jdbcType=CHAR},
-            content_uri  = #{contentUri,jdbcType=VARCHAR},
-            gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
-            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+        set subject_id     = #{subjectId,jdbcType=CHAR},
+            content_uri    = #{contentUri,jdbcType=VARCHAR},
+            extension_name = #{extensionName,jdbcType=VARCHAR},
+            size           = #{size,jdbcType=BIGINT},
+            mime           = #{mime,jdbcType=VARCHAR},
+            name           = #{name,jdbcType=VARCHAR},
+            gmt_create     = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified   = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=CHAR}
     </update>
     <select id="selectAllBySubjectId" resultMap="BaseResultMap">
@@ -100,8 +146,8 @@
         from learning_content where subject_id = #{subjectId,jdbcType=VARCHAR}
     </select>
     <select id="countByPrimaryKey" resultType="long">
-        select
-        <include refid="Base_Column_List"/>
-        from learning_content where id = #{id,jdbcType=VARCHAR}
+        select count(0)
+        from learning_content
+        where id = #{id,jdbcType=VARCHAR}
     </select>
 </mapper>

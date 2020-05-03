@@ -16,6 +16,14 @@ public class LearningContent {
 
     private String contentUri;
 
+    private String extensionName;
+
+    private Long size;
+
+    private String mime;
+
+    private String name;
+
     private Date gmtCreate;
 
     private Date gmtModified;

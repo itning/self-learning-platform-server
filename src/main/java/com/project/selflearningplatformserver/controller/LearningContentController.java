@@ -2,6 +2,7 @@ package com.project.selflearningplatformserver.controller;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.RestModel;
+import com.project.selflearningplatformserver.entity.LearningContent;
 import com.project.selflearningplatformserver.log.Log;
 import com.project.selflearningplatformserver.security.MustLogin;
 import com.project.selflearningplatformserver.security.MustTeacherLogin;
@@ -9,6 +10,7 @@ import com.project.selflearningplatformserver.service.LearningContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author itning
@@ -28,16 +30,30 @@ public class LearningContentController {
      *
      * @param loginUser 登录用户
      * @param subjectId 科目ID
-     * @param page      分页
-     * @param size      每页数量
      * @return ResponseEntity
      */
     @GetMapping("/learning_contents")
     public ResponseEntity<?> allLearningContent(@MustLogin LoginUser loginUser,
-                                                @RequestParam String subjectId,
-                                                @RequestParam(defaultValue = "1") int page,
-                                                @RequestParam(defaultValue = "20") int size) {
-        return RestModel.ok(learningContentService.getAllBySubjectId(subjectId, page, size));
+                                                @RequestParam String subjectId) {
+        return RestModel.ok(learningContentService.getAllBySubjectId(subjectId));
+    }
+
+    /**
+     * 新增学习内容
+     *
+     * @param loginUser 登录用户
+     * @param file      文件
+     * @param name      名称
+     * @param subjectId 科目ID
+     * @return ResponseEntity
+     */
+    @Log("新增学习内容")
+    @PostMapping("/learning_content")
+    public ResponseEntity<?> uploadLearningContent(@MustTeacherLogin LoginUser loginUser,
+                                                   @RequestParam("file") MultipartFile file,
+                                                   @RequestParam String name,
+                                                   @RequestParam String subjectId) {
+        return RestModel.created(learningContentService.newLearningContent(loginUser, file, subjectId, name));
     }
 
     /**
@@ -52,6 +68,21 @@ public class LearningContentController {
     public ResponseEntity<?> delLearningContent(@MustTeacherLogin LoginUser loginUser,
                                                 @PathVariable String id) {
         learningContentService.delLearningContent(loginUser, id);
+        return RestModel.noContent();
+    }
+
+    /**
+     * 教师修改学习内容
+     *
+     * @param loginUser       登录用户
+     * @param learningContent 学习内容
+     * @return ResponseEntity
+     */
+    @Log("修改学习内容")
+    @PatchMapping("/learning_content")
+    public ResponseEntity<?> updateLearningContent(@MustTeacherLogin LoginUser loginUser,
+                                                   @RequestBody LearningContent learningContent) {
+        learningContentService.updateLearningContent(loginUser, learningContent.getId(), learningContent.getName());
         return RestModel.noContent();
     }
 }

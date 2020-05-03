@@ -25,14 +25,14 @@ public class Md5Utils {
      * 字符串转MD5
      *
      * @param src 字符串
-     * @return <code>Tuple&lt;MD5,SALT&gt;</code>
+     * @return <code>Tuple2&lt;MD5,SALT&gt;</code>
      */
-    public static Tuple<String, String> string2Md5(String src) {
+    public static Tuple2<String, String> string2Md5(String src) {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[15];
         random.nextBytes(bytes);
         String salt = Base64.encodeBase64String(bytes);
-        return new Tuple<>(string2Md5(src, salt), salt);
+        return new Tuple2<>(string2Md5(src, salt), salt);
     }
 
     /**

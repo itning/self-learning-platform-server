@@ -1,9 +1,10 @@
 package com.project.selflearningplatformserver.service;
 
-import com.github.pagehelper.PageInfo;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.LearningContent;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 学习内容
@@ -16,11 +17,9 @@ public interface LearningContentService {
      * 分页获取学习内容
      *
      * @param subjectId 科目ID
-     * @param page      页码
-     * @param size      每页数量
      * @return 分页学习内容集合
      */
-    PageInfo<LearningContent> getAllBySubjectId(String subjectId, int page, int size);
+    List<LearningContent> getAllBySubjectId(String subjectId);
 
     /**
      * 教师删除学习内容
@@ -36,17 +35,16 @@ public interface LearningContentService {
      * @param loginUser 登录用户
      * @param file      文件
      * @param subjectId 科目ID
+     * @param name      名称
      * @return 新增的学习内容
      */
-    LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, String subjectId);
+    LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, String subjectId, String name);
 
     /**
      * 教师更新学习内容
      *
      * @param loginUser       登录用户
-     * @param file            文件
-     * @param learningContent 修改的学习内容
      * @return 修改的学习内容
      */
-    LearningContent updateLearningContent(LoginUser loginUser, MultipartFile file, LearningContent learningContent);
+    LearningContent updateLearningContent(LoginUser loginUser, String id, String name);
 }

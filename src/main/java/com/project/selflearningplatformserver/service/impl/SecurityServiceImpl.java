@@ -16,7 +16,7 @@ import com.project.selflearningplatformserver.service.SecurityService;
 import com.project.selflearningplatformserver.util.JwtUtils;
 import com.project.selflearningplatformserver.util.Md5Utils;
 import com.project.selflearningplatformserver.util.OrikaUtils;
-import com.project.selflearningplatformserver.util.Tuple;
+import com.project.selflearningplatformserver.util.Tuple2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,7 +68,7 @@ public class SecurityServiceImpl implements SecurityService {
             throw new IllegalFiledException("用户名已存在");
         }
 
-        Tuple<String, String> md5 = Md5Utils.string2Md5(password);
+        Tuple2<String, String> md5 = Md5Utils.string2Md5(password);
         Date date = new Date();
         User user = new User();
         user.setId(UUID.randomUUID().toString());
