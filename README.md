@@ -1,4 +1,18 @@
 # 系统总体功能结构清单
+
+[![GitHub stars](https://img.shields.io/github/stars/itning/self-learning-platform-server.svg?style=social&label=Stars)](https://github.com/itning/self-learning-platform-server/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/itning/self-learning-platform-server.svg?style=social&label=Fork)](https://github.com/itning/self-learning-platform-server/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/itning/self-learning-platform-server.svg?style=social&label=Watch)](https://github.com/itning/self-learning-platform-server/watchers)
+[![GitHub followers](https://img.shields.io/github/followers/itning.svg?style=social&label=Follow)](https://github.com/itning?tab=followers)
+
+[![GitHub issues](https://img.shields.io/github/issues/itning/self-learning-platform-server.svg)](https://github.com/itning/self-learning-platform-server/issues)
+[![GitHub license](https://img.shields.io/github/license/itning/self-learning-platform-server.svg)](https://github.com/itning/self-learning-platform-server/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/itning/self-learning-platform-server.svg)](https://github.com/itning/self-learning-platform-server/commits)
+[![GitHub release](https://img.shields.io/github/release/itning/self-learning-platform-server.svg)](https://github.com/itning/self-learning-platform-server/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/itning/self-learning-platform-server.svg)](https://github.com/itning/self-learning-platform-server)
+[![HitCount](http://hits.dwyl.io/itning/self-learning-platform-server.svg)](http://hits.dwyl.io/itning/self-learning-platform-server)
+[![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/self-learning-platform-server)
+
 1. 用户管理模块分为三个小模块:
 
 - [x] （1）用户注册:用户注册个人信息，填写信息资料并提交后，可以登陆该系统
