@@ -151,9 +151,26 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
     <select id="selectAllCanStudy" resultMap="BaseResultMap">
-        SELECT *
-        FROM learning_content
-        WHERE id not in
-              (SELECT learning_content_id FROM student_learning WHERE student_id = #{studentId,jdbcType=VARCHAR})
+        SELECT lc.id,
+               lc.subject_id,
+               lc.content_uri,
+               lc.extension_name,
+               lc.size,
+               lc.mime,
+               lc.name,
+               lc.gmt_create,
+               lc.gmt_modified
+        FROM learning_content lc
+                 INNER JOIN `subject` s ON s.id = lc.subject_id
+        WHERE s.user_id = (
+            SELECT u.id AS user_id
+            FROM student_class sc
+                     INNER JOIN student s ON s.student_class_id = sc.id
+                     INNER JOIN USER u ON u.id = sc.user_id
+            WHERE s.user_id = #{studentId,jdbcType=VARCHAR}
+        )
+          AND lc.id NOT IN (SELECT learning_content_id
+                            FROM student_learning
+                            WHERE student_id = #{studentId,jdbcType=VARCHAR})
     </select>
 </mapper>
