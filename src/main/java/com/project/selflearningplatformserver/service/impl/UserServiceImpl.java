@@ -2,11 +2,13 @@ package com.project.selflearningplatformserver.service.impl;
 
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
+import com.project.selflearningplatformserver.entity.Role;
 import com.project.selflearningplatformserver.entity.User;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
 import com.project.selflearningplatformserver.exception.IllegalFiledException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
 import com.project.selflearningplatformserver.exception.SecurityServerException;
+import com.project.selflearningplatformserver.mapper.RoleMapper;
 import com.project.selflearningplatformserver.mapper.UserMapper;
 import com.project.selflearningplatformserver.service.UserService;
 import com.project.selflearningplatformserver.util.Md5Utils;
@@ -34,8 +36,37 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper, RoleMapper roleMapper) {
         this.userMapper = userMapper;
+        checkRoleInfo(roleMapper);
+    }
+
+    private void checkRoleInfo(RoleMapper roleMapper) {
+        Role adminRole = roleMapper.selectByPrimaryKey(LoginUser.ROLE_ADMIN_ID);
+        Role teacherRole = roleMapper.selectByPrimaryKey(LoginUser.ROLE_TEACHER_ID);
+        Role studentRole = roleMapper.selectByPrimaryKey(LoginUser.ROLE_STUDENT_ID);
+        Date date = new Date();
+        if (Objects.isNull(adminRole)) {
+            Role role = new Role();
+            role.setId(LoginUser.ROLE_ADMIN_ID);
+            role.setName("管理员");
+            role.setGmtCreate(date);
+            role.setGmtModified(date);
+        }
+        if (Objects.isNull(teacherRole)) {
+            Role role = new Role();
+            role.setId(LoginUser.ROLE_TEACHER_ID);
+            role.setName("教师");
+            role.setGmtCreate(date);
+            role.setGmtModified(date);
+        }
+        if (Objects.isNull(studentRole)) {
+            Role role = new Role();
+            role.setId(LoginUser.ROLE_STUDENT_ID);
+            role.setName("学生");
+            role.setGmtCreate(date);
+            role.setGmtModified(date);
+        }
     }
 
     @Override
