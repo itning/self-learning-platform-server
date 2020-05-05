@@ -6,6 +6,10 @@
             <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="subject_id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="content_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_size" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="aid_extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="size" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -15,7 +19,8 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
-        id, subject_id, content_uri, extension_name, size, mime, name, gmt_create, gmt_modified
+        id, subject_id, content_uri, aid_uri, aid_size, aid_extension_name, aid_mime, extension_name,
+    size, mime, name, gmt_create, gmt_modified
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
@@ -30,11 +35,15 @@
     </delete>
     <insert id="insert" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         insert into learning_content (id, subject_id, content_uri,
-                                      extension_name, size, mime,
-                                      name, gmt_create, gmt_modified)
+                                      aid_uri, aid_size, aid_extension_name,
+                                      aid_mime, extension_name, size,
+                                      mime, name, gmt_create,
+                                      gmt_modified)
         values (#{id,jdbcType=CHAR}, #{subjectId,jdbcType=CHAR}, #{contentUri,jdbcType=VARCHAR},
-                #{extensionName,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT}, #{mime,jdbcType=VARCHAR},
-                #{name,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+                #{aidUri,jdbcType=VARCHAR}, #{aidSize,jdbcType=BIGINT}, #{aidExtensionName,jdbcType=VARCHAR},
+                #{aidMime,jdbcType=VARCHAR}, #{extensionName,jdbcType=VARCHAR}, #{size,jdbcType=BIGINT},
+                #{mime,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         insert into learning_content
@@ -47,6 +56,18 @@
             </if>
             <if test="contentUri != null">
                 content_uri,
+            </if>
+            <if test="aidUri != null">
+                aid_uri,
+            </if>
+            <if test="aidSize != null">
+                aid_size,
+            </if>
+            <if test="aidExtensionName != null">
+                aid_extension_name,
+            </if>
+            <if test="aidMime != null">
+                aid_mime,
             </if>
             <if test="extensionName != null">
                 extension_name,
@@ -76,6 +97,18 @@
             </if>
             <if test="contentUri != null">
                 #{contentUri,jdbcType=VARCHAR},
+            </if>
+            <if test="aidUri != null">
+                #{aidUri,jdbcType=VARCHAR},
+            </if>
+            <if test="aidSize != null">
+                #{aidSize,jdbcType=BIGINT},
+            </if>
+            <if test="aidExtensionName != null">
+                #{aidExtensionName,jdbcType=VARCHAR},
+            </if>
+            <if test="aidMime != null">
+                #{aidMime,jdbcType=VARCHAR},
             </if>
             <if test="extensionName != null">
                 #{extensionName,jdbcType=VARCHAR},
@@ -107,6 +140,18 @@
             <if test="contentUri != null">
                 content_uri = #{contentUri,jdbcType=VARCHAR},
             </if>
+            <if test="aidUri != null">
+                aid_uri = #{aidUri,jdbcType=VARCHAR},
+            </if>
+            <if test="aidSize != null">
+                aid_size = #{aidSize,jdbcType=BIGINT},
+            </if>
+            <if test="aidExtensionName != null">
+                aid_extension_name = #{aidExtensionName,jdbcType=VARCHAR},
+            </if>
+            <if test="aidMime != null">
+                aid_mime = #{aidMime,jdbcType=VARCHAR},
+            </if>
             <if test="extensionName != null">
                 extension_name = #{extensionName,jdbcType=VARCHAR},
             </if>
@@ -130,14 +175,18 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.project.selflearningplatformserver.entity.LearningContent">
         update learning_content
-        set subject_id     = #{subjectId,jdbcType=CHAR},
-            content_uri    = #{contentUri,jdbcType=VARCHAR},
-            extension_name = #{extensionName,jdbcType=VARCHAR},
-            size           = #{size,jdbcType=BIGINT},
-            mime           = #{mime,jdbcType=VARCHAR},
-            name           = #{name,jdbcType=VARCHAR},
-            gmt_create     = #{gmtCreate,jdbcType=TIMESTAMP},
-            gmt_modified   = #{gmtModified,jdbcType=TIMESTAMP}
+        set subject_id         = #{subjectId,jdbcType=CHAR},
+            content_uri        = #{contentUri,jdbcType=VARCHAR},
+            aid_uri            = #{aidUri,jdbcType=VARCHAR},
+            aid_size           = #{aidSize,jdbcType=BIGINT},
+            aid_extension_name = #{aidExtensionName,jdbcType=VARCHAR},
+            aid_mime           = #{aidMime,jdbcType=VARCHAR},
+            extension_name     = #{extensionName,jdbcType=VARCHAR},
+            size               = #{size,jdbcType=BIGINT},
+            mime               = #{mime,jdbcType=VARCHAR},
+            name               = #{name,jdbcType=VARCHAR},
+            gmt_create         = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified       = #{gmtModified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=CHAR}
     </update>
     <select id="selectAllBySubjectId" resultMap="BaseResultMap">
@@ -154,6 +203,10 @@
         SELECT lc.id,
                lc.subject_id,
                lc.content_uri,
+               lc.aid_uri,
+               lc.aid_size,
+               lc.aid_extension_name,
+               lc.aid_mime,
                lc.extension_name,
                lc.size,
                lc.mime,

@@ -22,6 +22,11 @@ public class AppProperties {
     private String learningContentDir;
 
     /**
+     * 学习内容额外文件存放目录
+     */
+    private String learningContentAidDir;
+
+    /**
      * 学习内容文件转码后存放的目录
      */
     private String learningContentTranscodingDir;
@@ -50,6 +55,10 @@ public class AppProperties {
 
     public void setStudentWorkDir(String studentWorkDir) {
         this.studentWorkDir = addDirSeparator(studentWorkDir);
+    }
+
+    public void setLearningContentAidDir(String learningContentAidDir) {
+        this.learningContentAidDir = addDirSeparator(learningContentAidDir);
     }
 
     /**

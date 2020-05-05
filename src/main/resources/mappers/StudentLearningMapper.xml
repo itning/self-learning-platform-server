@@ -26,6 +26,10 @@
             <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="subject_id" javaType="java.lang.String" jdbcType="CHAR"/>
             <arg column="content_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_size" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="aid_extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="aid_mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="extension_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="size" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="mime" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -124,6 +128,10 @@
         select lc.id,
                lc.subject_id,
                lc.content_uri,
+               lc.aid_uri,
+               lc.aid_size,
+               lc.aid_extension_name,
+               lc.aid_mime,
                lc.extension_name,
                lc.size,
                lc.mime,

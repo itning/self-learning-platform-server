@@ -4,6 +4,7 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.LearningContent;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,11 +35,12 @@ public interface LearningContentService {
      *
      * @param loginUser 登录用户
      * @param file      文件
+     * @param aidFile   其他文件
      * @param subjectId 科目ID
      * @param name      名称
      * @return 新增的学习内容
      */
-    LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, String subjectId, String name);
+    LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, MultipartFile aidFile, String subjectId, String name);
 
     /**
      * 教师更新学习内容
@@ -55,4 +57,15 @@ public interface LearningContentService {
      * @return 学习内容集合
      */
     List<LearningContent> getAllCanLearningContent(LoginUser loginUser);
+
+    /**
+     * 下载学习内容文件
+     *
+     * @param loginUser         登录用户
+     * @param learningContentId 学习内容ID
+     * @param range             {@link org.springframework.http.HttpHeaders#RANGE}
+     * @param response          {@link HttpServletResponse}
+     * @param type              aid or video
+     */
+    void downloadLearningContent(LoginUser loginUser, String learningContentId, String range, HttpServletResponse response, String type);
 }

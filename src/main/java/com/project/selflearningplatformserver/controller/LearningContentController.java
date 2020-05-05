@@ -9,9 +9,12 @@ import com.project.selflearningplatformserver.security.MustStudentLogin;
 import com.project.selflearningplatformserver.security.MustTeacherLogin;
 import com.project.selflearningplatformserver.service.LearningContentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author itning
@@ -44,6 +47,7 @@ public class LearningContentController {
      *
      * @param loginUser 登录用户
      * @param file      文件
+     * @param aidFile   其他文件
      * @param name      名称
      * @param subjectId 科目ID
      * @return ResponseEntity
@@ -52,9 +56,10 @@ public class LearningContentController {
     @PostMapping("/learning_content")
     public ResponseEntity<?> uploadLearningContent(@MustTeacherLogin LoginUser loginUser,
                                                    @RequestParam("file") MultipartFile file,
+                                                   @RequestParam("aid") MultipartFile aidFile,
                                                    @RequestParam String name,
                                                    @RequestParam String subjectId) {
-        return RestModel.created(learningContentService.newLearningContent(loginUser, file, subjectId, name));
+        return RestModel.created(learningContentService.newLearningContent(loginUser, file, aidFile, subjectId, name));
     }
 
     /**
@@ -95,5 +100,23 @@ public class LearningContentController {
     @GetMapping("/learning_content_of_student")
     public ResponseEntity<?> getAllCanLearningContent(@MustStudentLogin LoginUser loginUser) {
         return RestModel.ok(learningContentService.getAllCanLearningContent(loginUser));
+    }
+
+    /**
+     * 下载学习内容文件
+     *
+     * @param loginUser         登录用户
+     * @param type              哪种文件(video/aid)
+     * @param learningContentId 学习内容ID
+     * @param range             {@link HttpHeaders#RANGE}
+     * @param response          {@link HttpServletResponse}
+     */
+    @GetMapping("/download_learning_content/{type}/{learningContentId}")
+    public void downloadLearningContentAid(@MustLogin(role = {MustLogin.ROLE.STUDENT, MustLogin.ROLE.TEACHER}) LoginUser loginUser,
+                                           @PathVariable String type,
+                                           @PathVariable String learningContentId,
+                                           @RequestHeader(name = HttpHeaders.RANGE, required = false) String range,
+                                           HttpServletResponse response) {
+        learningContentService.downloadLearningContent(loginUser, learningContentId, range, response, type);
     }
 }

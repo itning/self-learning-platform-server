@@ -5,11 +5,13 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.LearningContent;
 import com.project.selflearningplatformserver.entity.Subject;
 import com.project.selflearningplatformserver.exception.IdNotFoundException;
+import com.project.selflearningplatformserver.exception.IllegalFiledException;
 import com.project.selflearningplatformserver.exception.NullFiledException;
 import com.project.selflearningplatformserver.exception.SecurityServerException;
 import com.project.selflearningplatformserver.mapper.LearningContentMapper;
 import com.project.selflearningplatformserver.mapper.SubjectMapper;
 import com.project.selflearningplatformserver.service.LearningContentService;
+import com.project.selflearningplatformserver.util.FileUtils;
 import com.project.selflearningplatformserver.video.VideoTransformHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -73,15 +76,21 @@ public class LearningContentServiceImpl implements LearningContentService {
      */
     private void delFiles(LearningContent learningContent) {
         File file = new File(appProperties.getLearningContentDir() + learningContent.getContentUri());
+        File aidFile = new File(appProperties.getLearningContentAidDir() + learningContent.getAidUri());
         File[] files = new File(appProperties.getLearningContentTranscodingDir()).listFiles();
         if (Objects.nonNull(files)) {
-            Arrays.stream(files).filter(f -> f.getName().startsWith(learningContent.getId())).forEach(f -> {
-                boolean isDelete = f.delete();
-                if (log.isDebugEnabled()) {
-                    log.debug("File {} Delete {}", f, isDelete ? "Success" : "Failed");
-                }
-            });
+            Arrays.stream(files).filter(f -> f.getName().startsWith(learningContent.getId())).forEach(this::delFile);
         }
+        delFile(file);
+        delFile(aidFile);
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param file 文件
+     */
+    private void delFile(File file) {
         if (file.exists()) {
             boolean isDelete = file.delete();
             if (log.isDebugEnabled()) {
@@ -95,7 +104,7 @@ public class LearningContentServiceImpl implements LearningContentService {
     }
 
     @Override
-    public LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, String subjectId, String name) {
+    public LearningContent newLearningContent(LoginUser loginUser, MultipartFile file, MultipartFile aidFile, String subjectId, String name) {
         if (StringUtils.isAnyBlank(subjectId, name)) {
             throw new NullFiledException("参数为空");
         }
@@ -108,10 +117,13 @@ public class LearningContentServiceImpl implements LearningContentService {
         }
         String id = UUID.randomUUID().toString();
         String filenameExtension = org.springframework.util.StringUtils.getFilenameExtension(file.getOriginalFilename());
+        String aidFilenameExtension = org.springframework.util.StringUtils.getFilenameExtension(aidFile.getOriginalFilename());
         String newFileName = id + "." + filenameExtension;
+        String newAidFileName = id + "." + aidFilenameExtension;
         try {
             File saveFile = new File(appProperties.getLearningContentDir() + newFileName);
             file.transferTo(saveFile);
+            aidFile.transferTo(new File(appProperties.getLearningContentAidDir() + newAidFileName));
             Date date = new Date();
             LearningContent learningContent = new LearningContent();
             learningContent.setId(id);
@@ -121,6 +133,10 @@ public class LearningContentServiceImpl implements LearningContentService {
             learningContent.setSize(file.getSize());
             learningContent.setMime(file.getContentType());
             learningContent.setName(name);
+            learningContent.setAidExtensionName(aidFilenameExtension);
+            learningContent.setAidMime(aidFile.getContentType());
+            learningContent.setAidSize(aidFile.getSize());
+            learningContent.setAidUri(newAidFileName);
             learningContent.setGmtCreate(date);
             learningContent.setGmtModified(date);
             learningContentMapper.insert(learningContent);
@@ -155,5 +171,36 @@ public class LearningContentServiceImpl implements LearningContentService {
     @Override
     public List<LearningContent> getAllCanLearningContent(LoginUser loginUser) {
         return learningContentMapper.selectAllCanStudy(loginUser.getId());
+    }
+
+    @Override
+    public void downloadLearningContent(LoginUser loginUser, String learningContentId, String range, HttpServletResponse response, String type) {
+        if (StringUtils.isBlank(learningContentId)) {
+            throw new NullFiledException("学习内容ID为空");
+        }
+        LearningContent learningContent = learningContentMapper.selectByPrimaryKey(learningContentId);
+        if (Objects.isNull(learningContent)) {
+            throw new IdNotFoundException("学习内容未找到");
+        }
+        File file;
+        String mime;
+        switch (type) {
+            case "video": {
+                file = new File(appProperties.getLearningContentDir() + learningContent.getContentUri());
+                mime = learningContent.getMime();
+                break;
+            }
+            case "aid": {
+                file = new File(appProperties.getLearningContentAidDir() + learningContent.getAidUri());
+                mime = learningContent.getAidMime();
+                break;
+            }
+            default:
+                throw new IllegalFiledException("未知type");
+        }
+        if (!file.exists()) {
+            throw new SecurityServerException("文件丢失", HttpStatus.NOT_FOUND);
+        }
+        FileUtils.breakpointResume(file, mime, range, response);
     }
 }

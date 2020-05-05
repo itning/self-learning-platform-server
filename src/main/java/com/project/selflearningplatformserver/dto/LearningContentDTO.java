@@ -20,6 +20,14 @@ public class LearningContentDTO {
 
     private String contentUri;
 
+    private String aidUri;
+
+    private Long aidSize;
+
+    private String aidExtensionName;
+
+    private String aidMime;
+
     private String extensionName;
 
     private Long size;

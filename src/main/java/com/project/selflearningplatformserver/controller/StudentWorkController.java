@@ -56,7 +56,8 @@ public class StudentWorkController {
     @GetMapping("/download_student_work/{id}")
     public void downloadStudentWork(@MustLogin(role = {MustLogin.ROLE.STUDENT, MustLogin.ROLE.TEACHER}) LoginUser loginUser,
                                     @RequestHeader(name = HttpHeaders.RANGE, required = false) String range,
-                                    @PathVariable String id, HttpServletResponse response) {
+                                    @PathVariable String id,
+                                    HttpServletResponse response) {
         studentWorkService.downloadWorkFile(loginUser, id, response, range);
     }
 
