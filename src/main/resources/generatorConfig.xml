@@ -67,6 +67,9 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
+        <table tableName="teacher"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
         <table tableName="announcement"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false">
