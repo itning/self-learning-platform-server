@@ -1,6 +1,7 @@
 package com.project.selflearningplatformserver.service.impl;
 
 import com.project.selflearningplatformserver.dto.ExaminationScoreDTO;
+import com.project.selflearningplatformserver.dto.ExaminationScoreWithExamName;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.UserDTO;
 import com.project.selflearningplatformserver.entity.Examination;
@@ -115,5 +116,10 @@ public class ExaminationScoreServiceImpl implements ExaminationScoreService {
         ExaminationScoreDTO examinationScoreDTO = OrikaUtils.a2b(examinationScore, ExaminationScoreDTO.class);
         examinationScoreDTO.setUser(OrikaUtils.a2b(userMapper.selectByPrimaryKey(score.getStudentId()), UserDTO.class));
         return examinationScoreDTO;
+    }
+
+    @Override
+    public List<ExaminationScoreWithExamName> getStudentOwnExaminationScore(LoginUser loginUser) {
+        return examinationScoreMapper.selectStudentOwnExaminationScore(loginUser.getId());
     }
 }

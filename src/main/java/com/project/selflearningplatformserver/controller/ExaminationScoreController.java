@@ -4,6 +4,7 @@ import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.dto.RestModel;
 import com.project.selflearningplatformserver.entity.ExaminationScore;
 import com.project.selflearningplatformserver.log.Log;
+import com.project.selflearningplatformserver.security.MustStudentLogin;
 import com.project.selflearningplatformserver.security.MustTeacherLogin;
 import com.project.selflearningplatformserver.service.ExaminationScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,16 @@ public class ExaminationScoreController {
                                                     @RequestBody ExaminationScore examinationScore) {
         examinationScoreService.updateExaminationScore(loginUser, examinationScore);
         return RestModel.noContent();
+    }
+
+    /**
+     * 学生获取自己的考试信息
+     *
+     * @param loginUser 登录用户
+     * @return ResponseEntity
+     */
+    @GetMapping("/examination_score_student")
+    public ResponseEntity<?> getStudentOwnExaminationScore(@MustStudentLogin LoginUser loginUser) {
+        return RestModel.ok(examinationScoreService.getStudentOwnExaminationScore(loginUser));
     }
 }

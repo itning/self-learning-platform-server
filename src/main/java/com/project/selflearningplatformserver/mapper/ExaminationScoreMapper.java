@@ -1,5 +1,6 @@
 package com.project.selflearningplatformserver.mapper;
 
+import com.project.selflearningplatformserver.dto.ExaminationScoreWithExamName;
 import com.project.selflearningplatformserver.entity.ExaminationScore;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ExaminationScoreMapper {
     int updateByPrimaryKey(ExaminationScore record);
 
     List<ExaminationScore> selectAllByExaminationId(String examinationId);
+
+    List<ExaminationScoreWithExamName> selectStudentOwnExaminationScore(String studentId);
 }

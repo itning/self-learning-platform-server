@@ -12,6 +12,19 @@
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="BaseResultMapWithExamName"
+               type="com.project.selflearningplatformserver.dto.ExaminationScoreWithExamName">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="student_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="subject" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="score" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="exam_id" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
         id, student_id, subject, score, exam_id, gmt_create, gmt_modified
     </sql>
@@ -122,5 +135,18 @@
         select
         <include refid="Base_Column_List"/>
         from examination_score where exam_id = #{examinationId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectStudentOwnExaminationScore" resultMap="BaseResultMapWithExamName">
+        select es.id,
+               es.student_id,
+               es.subject,
+               es.score,
+               es.exam_id,
+               es.gmt_create,
+               es.gmt_modified,
+               e.name
+        from examination_score es
+                 inner join examination e on es.exam_id = e.id
+        where es.student_id = #{studentId,jdbcType=VARCHAR}
     </select>
 </mapper>

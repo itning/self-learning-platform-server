@@ -1,6 +1,7 @@
 package com.project.selflearningplatformserver.service;
 
 import com.project.selflearningplatformserver.dto.ExaminationScoreDTO;
+import com.project.selflearningplatformserver.dto.ExaminationScoreWithExamName;
 import com.project.selflearningplatformserver.dto.LoginUser;
 import com.project.selflearningplatformserver.entity.ExaminationScore;
 
@@ -47,4 +48,12 @@ public interface ExaminationScoreService {
      * @return 更新的考试信息
      */
     ExaminationScoreDTO updateExaminationScore(LoginUser loginUser, ExaminationScore examinationScore);
+
+    /**
+     * 获取学生自己的成绩
+     *
+     * @param loginUser 登录用户
+     * @return 成绩集合
+     */
+    List<ExaminationScoreWithExamName> getStudentOwnExaminationScore(LoginUser loginUser);
 }
