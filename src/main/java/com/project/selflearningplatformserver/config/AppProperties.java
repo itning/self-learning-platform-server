@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.NotBlank;
 import java.io.File;
 
 /**
@@ -14,31 +16,37 @@ import java.io.File;
 @ToString
 @Getter
 @Component
+@Validated
 @ConfigurationProperties("app")
 public class AppProperties {
     /**
      * 学习内容文件存放目录
      */
+    @NotBlank(message = "请配置学习内容文件存放目录")
     private String learningContentDir;
 
     /**
      * 学习内容额外文件存放目录
      */
+    @NotBlank(message = "请配置学习内容额外文件存放目录")
     private String learningContentAidDir;
 
     /**
      * 学习内容文件转码后存放的目录
      */
+    @NotBlank(message = "请配置学习内容文件转码后存放的目录")
     private String learningContentTranscodingDir;
 
     /**
      * 学生作业文件存放目录
      */
+    @NotBlank(message = "请配置学生作业文件存放目录")
     private String studentWorkDir;
 
     /**
      * FFmpeg Bin 目录
      */
+    @NotBlank(message = "请配置 FFmpeg Bin 目录")
     private String ffmpegBinDir;
 
     public void setLearningContentDir(String learningContentDir) {
