@@ -13,6 +13,7 @@
 [![HitCount](http://hits.dwyl.io/itning/self-learning-platform-server.svg)](http://hits.dwyl.io/itning/self-learning-platform-server)
 [![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/self-learning-platform-server)
 
+## 功能大纲
 1. 用户管理模块分为三个小模块:
 
 - [x] （1）用户注册:用户注册个人信息，填写信息资料并提交后，可以登陆该系统
@@ -77,3 +78,8 @@
 - [x] 1.老师上传考试分数后，学生可查看自己的考试成绩。
 - [x] 2.管理员为教师注册账号后，教师可添加、修改自己的信息（如性别、年龄、学历、电话、邮箱）
 - [x] 3.学习内容管理增加上传文件（任意）学生可以下载
+
+## 运行环境
+- JDK 11
+- MySQL 8
+- Vue.JS
