@@ -2,7 +2,6 @@ package com.project.selflearningplatformserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.selflearningplatformserver.dto.UserDTO;
-import com.project.selflearningplatformserver.exception.SecurityServerException;
 
 /**
  * @author itning

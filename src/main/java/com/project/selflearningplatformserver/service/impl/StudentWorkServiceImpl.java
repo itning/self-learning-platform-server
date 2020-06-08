@@ -34,6 +34,9 @@ import java.util.Objects;
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class StudentWorkServiceImpl implements StudentWorkService {
+    private static final int WORK_MIN_SCORE = 0;
+    private static final int WORK_MAX_SCORE = 100;
+
     private final StudentWorkMapper studentWorkMapper;
     private final StudentLearningMapper studentLearningMapper;
     private final LearningContentMapper learningContentMapper;
@@ -52,7 +55,7 @@ public class StudentWorkServiceImpl implements StudentWorkService {
         if (StringUtils.isAnyBlank(studentWorkId, suggest)) {
             throw new NullFiledException("参数为空");
         }
-        if (score < 0 || score > 100) {
+        if (score < WORK_MIN_SCORE || score > WORK_MAX_SCORE) {
             throw new SecurityServerException("分数请大于0小于100", HttpStatus.BAD_REQUEST);
         }
         StudentWork studentWork = studentWorkMapper.selectByPrimaryKey(studentWorkId);
