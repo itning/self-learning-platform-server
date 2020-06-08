@@ -13,7 +13,10 @@
 [![HitCount](http://hits.dwyl.io/itning/self-learning-platform-server.svg)](http://hits.dwyl.io/itning/self-learning-platform-server)
 [![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/self-learning-platform-server)
 
+**前后端分离项目**，前端地址：[https://github.com/itning/self-learning-platform-client](https://github.com/itning/self-learning-platform-client)
+
 ## 功能大纲
+
 1. 用户管理模块分为三个小模块:
 
 - [x] （1）用户注册:用户注册个人信息，填写信息资料并提交后，可以登陆该系统
@@ -83,3 +86,6 @@
 - JDK 11
 - MySQL 8
 - Vue.JS
+
+## 截图
+
