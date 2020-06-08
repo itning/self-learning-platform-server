@@ -89,3 +89,12 @@
 
 ## 截图
 
+![a](https://raw.githubusercontent.com/itning/self-learning-platform-server/master/pic/a.png)
+
+![b](https://raw.githubusercontent.com/itning/self-learning-platform-server/master/pic/b.png)
+
+![c](https://raw.githubusercontent.com/itning/self-learning-platform-server/master/pic/c.png)
+
+![d](https://raw.githubusercontent.com/itning/self-learning-platform-server/master/pic/d.png)
+
+![e](https://raw.githubusercontent.com/itning/self-learning-platform-server/master/pic/e.png)
