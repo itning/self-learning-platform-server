@@ -1,4 +1,4 @@
-# 系统总体功能结构清单
+# 自学平台系统
 
 [![GitHub stars](https://img.shields.io/github/stars/itning/self-learning-platform-server.svg?style=social&label=Stars)](https://github.com/itning/self-learning-platform-server/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/itning/self-learning-platform-server.svg?style=social&label=Fork)](https://github.com/itning/self-learning-platform-server/network/members)
